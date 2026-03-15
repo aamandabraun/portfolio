@@ -1,6 +1,6 @@
 # Portfolio
 
-> 🚧 **Em desenvolvimento** — projeto em construção ativo.
+> 🚧 **Em desenvolvimento** — [Acesse](https://portfolio-mwar6tlul-aamandabrauns-projects.vercel.app/)
 
 Repositório dedicado ao desenvolvimento do meu portfólio, uma experiência visual marcante com animações, mesh gradients e scroll fluido para apresentar meus projetos e habilidades.
 
