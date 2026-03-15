@@ -1,427 +1,496 @@
-import { useEffect, useRef, useState } from "react";
-import * as THREE from "three";
+  import { useEffect, useState } from "react";
 
-const RAY_COUNT = 280;
-const SEGS = 20;
+  const PROJECTS = [
+    { title:"Stripe Animation", desc:"Animação 3D interativa de raios com Three.js e WebGL. Os raios respondem ao movimento do mouse em tempo real.", tags:["Three.js","React","WebGL"], emoji:"✦" },
+    { title:"Portfolio", desc:"Este portfolio — construído com React e Vite. Mesh gradients animados, scroll fluido e tipografia editorial.", tags:["React","Vite","Canvas"], emoji:"◈" },
+    { title:"Projeto 3", desc:"Descrição do seu projeto. Substitua com o que você realmente criou e as tecnologias que utilizou.", tags:["Tag1","Tag2","Tag3"], emoji:"◎" },
+  ];
 
-const TIME_THEMES = [
-  {
-    id: "antes-amanhecer", label: "Antes do amanhecer", icon: "🌙",
-    bgCenter: "#1a0a3d", bgMid: "#6a30b0", bgEdge: "#e8d8ff",
-    rayA: "#8040e0", rayB: "#4020a0", dot: "#c080ff",
-    glowInner: [1.0, 0.5, 1.0], glowOuter: [0.4, 0.1, 0.8],
-  },
-  {
-    id: "nascer-sol", label: "Nascer do sol", icon: "🌅",
-    bgCenter: "#ff8c30", bgMid: "#ffb870", bgEdge: "#fff5e0",
-    rayA: "#ff40a0", rayB: "#8020c0", dot: "#ff80c0",
-    glowInner: [1.0, 0.7, 0.3], glowOuter: [1.0, 0.3, 0.5],
-  },
-  {
-    id: "por-sol", label: "Pôr do sol", icon: "🌆",
-    bgCenter: "#ff6080", bgMid: "#e080c8", bgEdge: "#f8e0ff",
-    rayA: "#ff7040", rayB: "#9030c0", dot: "#ff90a0",
-    glowInner: [1.0, 0.5, 0.4], glowOuter: [0.8, 0.2, 0.7],
-  },
-  {
-    id: "noite", label: "Noite", icon: "🌃",
-    bgCenter: "#0a0a2a", bgMid: "#2a2080", bgEdge: "#d0c8ff",
-    rayA: "#6060ff", rayB: "#3030c0", dot: "#a0a0ff",
-    glowInner: [0.6, 0.6, 1.0], glowOuter: [0.2, 0.1, 0.8],
-  },
-];
+  export default function Portfolio() {
+    const [activeSection, setActiveSection] = useState("works");
+    const [visible, setVisible]             = useState({});
+    const [scrollProgress, setScrollProgress] = useState(0);
 
-export default function Portfolio() {
-  const mountRef = useRef(null);
-  const stateRef = useRef({
-    mouse: { x: 0.5, y: 0.5 },
-    targetMouse: { x: 0.5, y: 0.5 },
-    tick: 0,
-    scroll: 0,
-    targetScroll: 0,
-    themeIdx: 0,
-    targetThemeIdx: 0,
-    transition: 1.0,
-  });
+    useEffect(() => {
+      const obs = new IntersectionObserver(
+        entries => entries.forEach(e => {
+          if (e.isIntersecting) {
+            setVisible(v => ({ ...v, [e.target.dataset.id]:true }));
+            setActiveSection(e.target.dataset.id);
+          }
+        }),
+        { threshold:0.2 }
+      );
+      setTimeout(() => {
+        document.querySelectorAll("[data-id]").forEach(el => obs.observe(el));
+      }, 100);
+      return () => obs.disconnect();
+    }, []);
 
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const [nameVisible, setNameVisible] = useState(false);
-  const [activeTheme, setActiveTheme] = useState(0);
-  const [menuOpen, setMenuOpen] = useState(false);
+    useEffect(() => {
+      const bases = [
+        { id:"blob1", bx:30, by:20 },
+        { id:"blob2", bx:70, by:30 },
+        { id:"blob3", bx:20, by:60 },
+        { id:"blob4", bx:60, by:10 },
+        { id:"blob5", bx:75, by:75 },
+      ];
 
-  useEffect(() => {
-    const t = setTimeout(() => setNameVisible(true), 600);
-    return () => clearTimeout(t);
-  }, []);
+      const onMove = (e) => {
+        const mx = (e.clientX / window.innerWidth  - 0.5) * 2; // -1 a 1
+        const my = (e.clientY / window.innerHeight - 0.5) * 2; // -1 a 1
 
-  const changeTheme = (idx) => {
-    stateRef.current.targetThemeIdx = idx;
-    stateRef.current.transition = 0;
-    setActiveTheme(idx);
-    setMenuOpen(false);
-  };
+        const strengths = [12, -10, 15, -8, 10];
+
+        bases.forEach((b, i) => {
+          const el = document.getElementById(b.id);
+          if (el) {
+            el.style.left = `${b.bx + mx * strengths[i]}%`;
+            el.style.top  = `${b.by + my * strengths[i]}%`;
+          }
+        });
+      };
+
+      window.addEventListener("mousemove", onMove);
+      return () => window.removeEventListener("mousemove", onMove);
+    }, []);
 
   useEffect(() => {
-    const container = mountRef.current;
-    let W = container.clientWidth;
-    let H = container.clientHeight;
-
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(W, H);
-    renderer.setClearColor(0x000000, 0);
-    container.appendChild(renderer.domElement);
-
-    const scene = new THREE.Scene();
-    const camera = new THREE.OrthographicCamera(-W/2, W/2, H/2, -H/2, 0.1, 100);
-    camera.position.z = 10;
-
-    // ── Background radial ─────────────────────────────────────
-    const bgMat = new THREE.ShaderMaterial({
-      uniforms: {
-        colorCenter: { value: new THREE.Color(TIME_THEMES[0].bgCenter) },
-        colorMid:    { value: new THREE.Color(TIME_THEMES[0].bgMid) },
-        colorEdge:   { value: new THREE.Color(TIME_THEMES[0].bgEdge) },
-        scroll:      { value: 0.0 },
-        aspect:      { value: W / H },
-      },
-      vertexShader: `
-        varying vec2 vUv;
-        void main() {
-          vUv = uv;
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
-        }
-      `,
-      fragmentShader: `
-        uniform vec3 colorCenter;
-        uniform vec3 colorMid;
-        uniform vec3 colorEdge;
-        uniform float scroll;
-        uniform float aspect;
-        varying vec2 vUv;
-        void main() {
-          vec2 centered = vec2((vUv.x - 0.5) * aspect, vUv.y - 0.5);
-          float dist = length(centered) / (aspect * 0.6);
-          dist = clamp(dist, 0.0, 1.0);
-          float expandedDist = clamp(dist - scroll * 0.6, 0.0, 1.0);
-          vec3 col = mix(colorCenter, colorMid, smoothstep(0.0, 0.45, expandedDist));
-          col = mix(col, colorEdge, smoothstep(0.35, 1.0, expandedDist));
-          float alpha = 1.0 - scroll * 0.85;
-          gl_FragColor = vec4(col, alpha);
-        }
-      `,
-      transparent: true,
-      depthWrite: false,
-    });
-    const bgMesh = new THREE.Mesh(new THREE.PlaneGeometry(W, H), bgMat);
-    bgMesh.position.z = -5;
-    scene.add(bgMesh);
-
-    // ── Raios ─────────────────────────────────────────────────
-    const rayData = Array.from({ length: RAY_COUNT }, (_, i) => ({
-      baseAngle: (i / RAY_COUNT) * Math.PI * 2,
-      len:       Math.min(W, H) * 0.38 + Math.random() * Math.min(W, H) * 0.42,
-      speed:     0.4 + Math.random() * 1.2,
-      phase:     Math.random() * Math.PI * 2,
-      phaseY:    Math.random() * Math.PI * 2,
-      dotR:      2.5 + Math.random() * 7,
-    }));
-
-    const rayObjects = rayData.map((rd) => {
-      const positions = new Float32Array((SEGS + 1) * 3);
-      const geo = new THREE.BufferGeometry();
-      geo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-      const mat = new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.7 });
-      const line = new THREE.Line(geo, mat);
-      scene.add(line);
-
-      const dotGeo = new THREE.CircleGeometry(rd.dotR, 14);
-      const dotMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.9 });
-      const dot = new THREE.Mesh(dotGeo, dotMat);
-      scene.add(dot);
-
-      return { line, geo, mat, dot, dotMat, rd };
-    });
-
-    // ── Glow central ──────────────────────────────────────────
-    const glowMat = new THREE.ShaderMaterial({
-      uniforms: {
-        scroll:     { value: 0.0 },
-        innerColor: { value: new THREE.Vector3(...TIME_THEMES[0].glowInner) },
-        outerColor: { value: new THREE.Vector3(...TIME_THEMES[0].glowOuter) },
-      },
-      vertexShader: `
-        varying vec2 vUv;
-        void main() {
-          vUv = uv;
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
-        }
-      `,
-      fragmentShader: `
-        uniform float scroll;
-        uniform vec3 innerColor;
-        uniform vec3 outerColor;
-        varying vec2 vUv;
-        void main() {
-          vec2 c = vUv - 0.5;
-          float d = length(c) * 2.0;
-          float glow = 1.0 - smoothstep(0.0, 1.0, d);
-          glow = pow(glow, 1.8);
-          float alpha = glow * (1.0 - scroll * 1.2) * 0.75;
-          alpha = clamp(alpha, 0.0, 1.0);
-          vec3 col = mix(outerColor, innerColor, pow(max(0.0, 1.0 - d), 2.0));
-          gl_FragColor = vec4(col, alpha);
-        }
-      `,
-      transparent: true,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false,
-    });
-    const glowSize = Math.min(W, H) * 0.55;
-    const glowMesh = new THREE.Mesh(new THREE.PlaneGeometry(glowSize, glowSize), glowMat);
-    glowMesh.position.z = 0.5;
-    scene.add(glowMesh);
-
-    // ── Helper: lerp entre temas ──────────────────────────────
-    const gc = (key, fi, ti, t) =>
-      new THREE.Color(TIME_THEMES[fi][key]).lerp(new THREE.Color(TIME_THEMES[ti][key]), t);
-
-    const lerpVec3 = (a, b, t) => [
-      a[0] + (b[0] - a[0]) * t,
-      a[1] + (b[1] - a[1]) * t,
-      a[2] + (b[2] - a[2]) * t,
-    ];
-
-    // ── Animate ───────────────────────────────────────────────
-    let animId;
-    const animate = () => {
-      animId = requestAnimationFrame(animate);
-      const s = stateRef.current;
-
-      s.tick += 0.018;
-      s.scroll   += (s.targetScroll - s.scroll)   * 0.06;
-      s.mouse.x  += (s.targetMouse.x - s.mouse.x) * 0.05;
-      s.mouse.y  += (s.targetMouse.y - s.mouse.y) * 0.05;
-      if (s.transition < 1) s.transition = Math.min(1, s.transition + 0.022);
-      else s.themeIdx = s.targetThemeIdx;
-
-      const { tick, scroll, mouse, transition: tr, themeIdx: fi, targetThemeIdx: ti } = s;
-      const shrink = Math.max(0, 1 - scroll * 1.4);
-
-      // Atualiza BG com tema atual
-      bgMat.uniforms.colorCenter.value = gc("bgCenter", fi, ti, tr);
-      bgMat.uniforms.colorMid.value    = gc("bgMid",    fi, ti, tr);
-      bgMat.uniforms.colorEdge.value   = gc("bgEdge",   fi, ti, tr);
-      bgMat.uniforms.scroll.value      = scroll;
-      bgMat.uniforms.aspect.value      = W / H;
-
-      // Atualiza glow com tema
-      const gi = lerpVec3(TIME_THEMES[fi].glowInner, TIME_THEMES[ti].glowInner, tr);
-      const go = lerpVec3(TIME_THEMES[fi].glowOuter, TIME_THEMES[ti].glowOuter, tr);
-      glowMat.uniforms.innerColor.value.set(...gi);
-      glowMat.uniforms.outerColor.value.set(...go);
-      glowMat.uniforms.scroll.value = scroll;
-
-      // Cores de raio interpoladas
-      const cRayA = gc("rayA", fi, ti, tr);
-      const cRayB = gc("rayB", fi, ti, tr);
-      const cDot  = gc("dot",  fi, ti, tr);
-
-      rayObjects.forEach(({ geo, mat, dot, dotMat, rd }, i) => {
-        const progress = i / RAY_COUNT; // 0→1 ao longo do círculo
-
-        const angle = rd.baseAngle
-          + Math.sin(tick * rd.speed + rd.phase) * 0.02
-          + (mouse.x - 0.5) * 0.35;
-
-        const currentLen = rd.len * shrink;
-        const pos = geo.attributes.position.array;
-
-        for (let seg = 0; seg <= SEGS; seg++) {
-          const frac = seg / SEGS;
-          const dist = currentLen * frac;
-
-          const mouseInfluenceX = (mouse.x - 0.5) * frac * frac * 180;
-          const mouseInfluenceY = (mouse.y - 0.5) * frac * frac * 120;
-
-          const wobbleAmp = 60 + Math.sin(rd.phase) * 30;
-          const wobble = Math.sin(tick * rd.speed + rd.phaseY + frac * Math.PI * 2)
-                         * frac * frac * wobbleAmp * shrink;
-
-          const px = Math.cos(angle + Math.PI / 2);
-          const py = Math.sin(angle + Math.PI / 2);
-
-          pos[seg*3]   = Math.cos(angle) * dist + px * wobble + mouseInfluenceX * Math.cos(rd.baseAngle);
-          pos[seg*3+1] = Math.sin(angle) * dist + py * wobble + mouseInfluenceY * Math.sin(rd.baseAngle);
-          pos[seg*3+2] = 0;
-        }
-        geo.attributes.position.needsUpdate = true;
-
-        // Cor do raio: interpola rayA → rayB ao longo do círculo
-        const rayColor = new THREE.Color().lerpColors(cRayA, cRayB, progress);
-        mat.color.copy(rayColor);
-        mat.opacity = (0.5 + Math.sin(tick * rd.speed + rd.phase) * 0.15) * shrink;
-
-        const tipX = pos[SEGS*3];
-        const tipY = pos[SEGS*3+1];
-        dot.position.set(tipX, tipY, 0.2);
-        const pulse = (0.7 + Math.sin(tick * rd.speed * 1.3 + rd.phase) * 0.3) * shrink;
-        dot.scale.setScalar(Math.max(0.01, pulse));
-        dotMat.color.copy(cDot);
-        dotMat.opacity = (0.7 + Math.sin(tick * rd.speed + rd.phase) * 0.2) * shrink;
-      });
-
-      renderer.render(scene, camera);
+    const onScroll = () => {
+      const total = document.body.scrollHeight - window.innerHeight;
+      const current = window.scrollY;
+      setScrollProgress((current / total) * 100);
     };
-    animate();
-
-    // ── Resize ────────────────────────────────────────────────
-    const onResize = () => {
-      W = container.clientWidth;
-      H = container.clientHeight;
-      renderer.setSize(W, H);
-      camera.left = -W/2; camera.right = W/2;
-      camera.top  =  H/2; camera.bottom = -H/2;
-      camera.updateProjectionMatrix();
-      bgMesh.geometry.dispose();
-      bgMesh.geometry = new THREE.PlaneGeometry(W, H);
-    };
-    window.addEventListener("resize", onResize);
-
-    return () => {
-      cancelAnimationFrame(animId);
-      window.removeEventListener("resize", onResize);
-      renderer.dispose();
-      if (container.contains(renderer.domElement))
-        container.removeChild(renderer.domElement);
-    };
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // ── Scroll ────────────────────────────────────────────────
-  useEffect(() => {
-    const onWheel = (e) => {
-      const s = stateRef.current;
-      s.targetScroll = Math.min(1, Math.max(0, s.targetScroll + e.deltaY * 0.001));
-      setScrollProgress(s.targetScroll);
-    };
-    let touchStartY = 0;
-    const onTouchStart = (e) => { touchStartY = e.touches[0].clientY; };
-    const onTouchMove  = (e) => {
-      const delta = touchStartY - e.touches[0].clientY;
-      touchStartY = e.touches[0].clientY;
-      const s = stateRef.current;
-      s.targetScroll = Math.min(1, Math.max(0, s.targetScroll + delta * 0.003));
-      setScrollProgress(s.targetScroll);
-    };
-    window.addEventListener("wheel", onWheel, { passive: true });
-    window.addEventListener("touchstart", onTouchStart, { passive: true });
-    window.addEventListener("touchmove",  onTouchMove,  { passive: true });
-    return () => {
-      window.removeEventListener("wheel", onWheel);
-      window.removeEventListener("touchstart", onTouchStart);
-      window.removeEventListener("touchmove",  onTouchMove);
-    };
-  }, []);
+    const scrollTo = id => document.getElementById(id)?.scrollIntoView({ behavior:"smooth" });
 
-  const onMouseMove = (e) => {
-    const rect = mountRef.current.getBoundingClientRect();
-    stateRef.current.targetMouse.x = (e.clientX - rect.left) / rect.width;
-    stateRef.current.targetMouse.y = (e.clientY - rect.top)  / rect.height;
-  };
+    const fadeIn = (id, delay=0) => ({
+      opacity:   visible[id] ? 1 : 0,
+      transform: visible[id] ? "translateY(0)" : "translateY(44px)",
+      transition:`opacity 1s ease ${delay}s, transform 1s ease ${delay}s`,
+    });
 
-  const introOpacity   = Math.max(0, 1 - scrollProgress * 2.5);
-  const contentOpacity = Math.max(0, (scrollProgress - 0.3) * 2.5);
-  const theme = TIME_THEMES[activeTheme];
+    return (
+      <div style={{ fontFamily:"'Sora', sans-serif" }}>
 
-  return (
-    <div style={{ width: "100vw", height: "100vh", position: "relative", overflow: "hidden", fontFamily: "'Georgia', serif" }}>
-
-      <div ref={mountRef} onMouseMove={onMouseMove}
-        style={{ position: "absolute", inset: 0, cursor: "crosshair",
-          opacity: Math.max(0, 1 - scrollProgress * 1.2) }} />
-
-      {/* Nome */}
-      <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column",
-        alignItems: "center", justifyContent: "center", pointerEvents: "none",
-        opacity: introOpacity, transition: "opacity 0.2s" }}>
-        <div style={{ fontSize: "clamp(36px, 6vw, 80px)", fontWeight: 700, color: "#fff",
-          letterSpacing: "-1px", textShadow: "0 0 40px rgba(220,100,255,0.9), 0 0 80px rgba(180,60,255,0.5)",
-          opacity: nameVisible ? 1 : 0, transform: nameVisible ? "translateY(0)" : "translateY(12px)",
-          transition: "opacity 1.2s ease, transform 1.2s ease", textAlign: "center" }}>
-          Amanda Braun
+        {/* ── BLOBS ── */}
+        <div style={{
+          position:"fixed", inset:0, zIndex:0, pointerEvents:"none",
+          background:"#fff0ee", overflow:"hidden",
+        }}>
+          <div id="blob1" style={{ position:"absolute", width:500, height:500, borderRadius:"50%", background:"radial-gradient(circle at center, #ff6b9d, #ff3d7f)", filter:"blur(80px)", opacity:0.75, top:"20%", left:"30%", transform:"translate(-50%,-50%)", transition:"top 0.8s ease, left 0.8s ease", animation:"blob1 8s ease-in-out infinite" }}/>
+          <div id="blob2" style={{ position:"absolute", width:500, height:500, borderRadius:"50%", background:"radial-gradient(circle at center, #ffaa00, #ff6b35)", filter:"blur(90px)", opacity:0.8,  top:"30%", left:"70%", transform:"translate(-50%,-50%)", transition:"top 0.8s ease, left 0.8s ease", animation:"blob2 10s ease-in-out infinite" }}/>
+          <div id="blob3" style={{ position:"absolute", width:500, height:500, borderRadius:"50%", background:"radial-gradient(circle at center, #c026d3, #9333ea)", filter:"blur(85px)", opacity:0.65, top:"60%", left:"20%", transform:"translate(-50%,-50%)", transition:"top 0.8s ease, left 0.8s ease", animation:"blob3 12s ease-in-out infinite" }}/>
+          <div id="blob4" style={{ position:"absolute", width:500, height:500, borderRadius:"50%", background:"radial-gradient(circle at center, #f9a8d4, #fb7185)", filter:"blur(70px)", opacity:0.6,  top:"10%", left:"60%", transform:"translate(-50%,-50%)", transition:"top 0.8s ease, left 0.8s ease", animation:"blob4 9s ease-in-out infinite" }}/>
+          <div id="blob5" style={{ position:"absolute", width:500, height:500, borderRadius:"50%", background:"radial-gradient(circle at center, #fdba74, #f97316)", filter:"blur(75px)", opacity:0.7,  top:"75%", left:"75%", transform:"translate(-50%,-50%)", transition:"top 0.8s ease, left 0.8s ease", animation:"blob5 11s ease-in-out infinite" }}/>
         </div>
-        <div style={{ marginTop: 14, fontSize: "clamp(13px, 1.8vw, 20px)", color: "rgba(255,255,255,0.75)",
-          letterSpacing: "3px", textTransform: "uppercase", textShadow: "0 0 20px rgba(200,100,255,0.6)",
-          opacity: nameVisible ? 1 : 0, transform: nameVisible ? "translateY(0)" : "translateY(8px)",
-          transition: "opacity 1.4s ease 0.3s, transform 1.4s ease 0.3s" }}>
-          Designer & Developer
-        </div>
-        <div style={{ position: "absolute", bottom: 36, display: "flex", flexDirection: "column",
-          alignItems: "center", gap: 8, opacity: nameVisible ? 0.6 : 0,
-          transition: "opacity 1.5s ease 0.8s", animation: "bounce 2s ease-in-out infinite" }}>
-          <span style={{ color: "#e0c8ff", fontSize: 12, letterSpacing: 2, textTransform: "uppercase" }}>scroll</span>
-          <svg width="16" height="24" viewBox="0 0 16 24" fill="none">
-            <rect x="6" y="1" width="4" height="10" rx="2" fill="rgba(220,180,255,0.7)"/>
-            <path d="M8 16 L3 21 M8 16 L13 21" stroke="rgba(220,180,255,0.7)" strokeWidth="1.5" strokeLinecap="round"/>
-          </svg>
-        </div>
-      </div>
 
-      {/* Conteúdo */}
-      <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column",
-        alignItems: "center", justifyContent: "center", opacity: contentOpacity,
-        transform: `translateY(${Math.max(0, (0.3 - scrollProgress) * 60)}px)`,
-        pointerEvents: contentOpacity > 0.1 ? "auto" : "none", padding: "0 24px", textAlign: "center" }}>
-        <p style={{ fontSize: "clamp(16px, 2.5vw, 28px)", color: "#4a2060", maxWidth: 600, lineHeight: 1.7, fontStyle: "italic" }}>
-          "Crio experiências digitais que combinam design e código — onde cada detalhe importa."
-        </p>
-        <div style={{ marginTop: 40, display: "flex", gap: 16, flexWrap: "wrap", justifyContent: "center" }}>
-          {["Projetos", "Sobre mim", "Contato"].map((label) => (
-            <button key={label} style={{ padding: "12px 28px", borderRadius: 30,
-              border: "1.5px solid rgba(150,60,200,0.4)", background: "rgba(180,100,255,0.08)",
-              color: "#7030a0", fontSize: 14, fontFamily: "inherit", letterSpacing: 1, cursor: "pointer",
-              backdropFilter: "blur(8px)" }}>
-              {label}
+        {/* Overlay */}
+        <div style={{
+          position:"fixed", inset:0, zIndex:0, pointerEvents:"none",
+          background:"rgba(253,246,255,0.18)",
+        }}/>
+
+        {/* ── NAV ──────────────────────────────────────────── */}
+        <nav style={{
+          position:"fixed", top:0, left:0, right:0, zIndex:200,
+          display:"flex", alignItems:"center", justifyContent:"space-between",
+          padding:"22px 48px",
+        }}>
+          {/* linha de progresso */}
+          <div style={{
+            position:"absolute", bottom:0, left:0,
+            height:"2px",
+            width:"100%",
+            background:"rgba(192,132,252,0.15)",
+          }}>
+            <div style={{
+              height:"100%",
+              width:`${scrollProgress}%`,
+              background:"linear-gradient(90deg, #ff3d7f, #ff6b35, #ffaa00)",
+              transition:"width 0.1s linear",
+              position:"relative",
+            }}/>
+          </div>
+
+          <div style={{
+            position:"absolute", right:0, top:"50%",
+            transform:"translateY(-50%)",
+            width:6, height:6, borderRadius:"50%",
+            background:"#ffffff",
+            boxShadow:"0 0 8px 3px rgba(255,255,255,0.9), 0 0 16px 4px rgba(255,180,100,0.6)",
+          }}/>
+
+          <div style={{ display:"flex", alignItems:"center", gap:18 }}>
+            <span style={{ fontWeight:700, fontSize:15, color:"#1a0030", letterSpacing:"-0.2px" }}>
+              Amanda Braun
+            </span>
+            <span style={{ fontSize:11, color:"#b06fd4", letterSpacing:"2px", textTransform:"uppercase" }}>
+              Web Developer
+            </span>
+          </div>
+          <div style={{ display:"flex", gap:32 }}>
+            {["works","about","contact"].map(s => (
+              <button key={s} onClick={() => scrollTo(s)} style={{
+                background:"none", border:"none", cursor:"pointer",
+                fontSize:13, letterSpacing:"1px", textTransform:"lowercase",
+                color: activeSection===s ? "#9333ea" : "#b06fd4",
+                fontWeight: activeSection===s ? 700 : 400,
+                fontFamily:"inherit", padding:0, transition:"color 0.3s",
+              }}>
+                {s}
+              </button>
+            ))}
+          </div>
+        </nav>
+
+        {/* ══════════════════════════════════════════════════
+            SEÇÃO 1 — HERO
+        ══════════════════════════════════════════════════ */}
+        <section id="works" data-id="works" style={{
+          minHeight:"100vh", position:"relative", zIndex:1,
+          display:"flex", alignItems:"flex-end",
+          padding:"0 48px 64px",
+          overflow:"hidden",
+        }}>
+          {/* WEB DEV fantasma */}
+          <div style={{
+            position:"absolute", left:32, top:"50%",
+            transform:"translateY(-60%)", pointerEvents:"none", userSelect:"none",
+            fontSize:"clamp(90px,15vw,180px)", fontWeight:900, lineHeight:0.9,
+            color:"rgba(147,51,234,0.08)", letterSpacing:"-4px",
+          }}>
+            WEB<br/>DEV
+          </div>
+
+          {/* Inferior esquerdo: nome */}
+          <div style={{ flex:1, ...fadeIn("works") }}>
+            <p style={{ fontSize:11, color:"#b06fd4", letterSpacing:"3px", textTransform:"uppercase", marginBottom:14 }}>
+              creative
+            </p>
+            <h1 style={{
+              fontSize:"clamp(56px,9vw,120px)", fontWeight:900,
+              letterSpacing:"-3px", lineHeight:0.88, margin:0,
+              textTransform:"uppercase",
+              background:"linear-gradient(135deg, #c026d3, #ff3d7f, #ff6b35, #ff9a00)",
+              WebkitBackgroundClip:"text",
+              WebkitTextFillColor:"transparent",
+              backgroundClip:"text",
+            }}>
+              AMANDA<br/>BRAUN
+            </h1>
+          </div>
+
+          {/* Inferior direito: desc */}
+          <div style={{ maxWidth:380, textAlign:"right", ...fadeIn("works",0.25) }}>
+            <div style={{
+              display:"inline-flex", alignItems:"center", gap:8,
+              background:"rgba(255,255,255,0.65)", backdropFilter:"blur(12px)",
+              borderRadius:30, padding:"6px 16px 6px 10px",
+              border:"1px solid rgba(192,132,252,0.35)",
+              marginBottom:22,
+            }}>
+              <span style={{ width:8, height:8, borderRadius:"50%", background:"#22c55e", boxShadow:"0 0 8px #22c55e" }}/>
+              <span style={{ fontSize:12, color:"#7e22ce" }}>available for work</span>
+            </div>
+
+            <p style={{
+              fontSize:"clamp(15px,1.8vw,20px)", color:"#1a0030",
+              fontWeight:800, lineHeight:1.3, letterSpacing:"-0.3px",
+              textTransform:"uppercase", margin:"0 0 24px",
+            }}>
+              I BUILD WEBSITES THAT BLEND DESIGN AND CODE INTO MEMORABLE EXPERIENCES.
+            </p>
+
+            <button onClick={() => scrollTo("contact")} style={{
+              padding:"13px 30px", borderRadius:50,
+              border:"2px solid #1a0030", background:"transparent",
+              color:"#1a0030", fontSize:12, fontWeight:700,
+              cursor:"pointer", letterSpacing:"2px",
+              textTransform:"uppercase", fontFamily:"inherit",
+              transition:"all 0.25s",
+            }}
+              onMouseEnter={e=>{e.target.style.background="#1a0030";e.target.style.color="#fdf6ff";}}
+              onMouseLeave={e=>{e.target.style.background="transparent";e.target.style.color="#1a0030";}}
+            >
+              CONTACT ME ↗
             </button>
-          ))}
-        </div>
-      </div>
+          </div>
 
-      {/* Seletor de tema */}
-      <div style={{ position: "absolute", top: 16, right: 16, display: "flex", gap: 8, zIndex: 10 }}>
-        <div style={{ position: "relative" }}>
-          <button onClick={() => setMenuOpen(m => !m)} style={{ width: 38, height: 38, borderRadius: 8,
-            border: "1px solid rgba(255,255,255,0.3)", background: "rgba(255,255,255,0.15)",
-            backdropFilter: "blur(12px)", cursor: "pointer", fontSize: 16,
-            display: "flex", alignItems: "center", justifyContent: "center" }}>
-            {theme.icon}
-          </button>
-          {menuOpen && (
-            <div style={{ position: "absolute", top: 46, right: 0, background: "rgba(255,255,255,0.9)",
-              backdropFilter: "blur(20px)", borderRadius: 14, padding: "6px 0", minWidth: 210,
-              boxShadow: "0 8px 40px rgba(0,0,0,0.18)", border: "1px solid rgba(255,255,255,0.6)" }}>
-              {TIME_THEMES.map((th, i) => (
-                <button key={th.id} onClick={() => changeTheme(i)} style={{
-                  width: "calc(100% - 8px)", margin: "0 4px", padding: "10px 14px", border: "none",
-                  background: activeTheme === i ? "rgba(99,102,241,0.1)" : "transparent",
-                  cursor: "pointer", textAlign: "left", fontSize: 13,
-                  color: activeTheme === i ? "#4f46e5" : "#374151",
-                  fontWeight: activeTheme === i ? 600 : 400,
-                  display: "flex", alignItems: "center", gap: 10, borderRadius: 8 }}>
-                  <span>{th.icon}</span><span>{th.label}</span>
-                </button>
+          {/* scroll hint */}
+          <div style={{
+            position:"absolute", bottom:28, left:"50%", transform:"translateX(-50%)",
+            display:"flex", flexDirection:"column", alignItems:"center", gap:6,
+            opacity:0.45, animation:"bounce 2s ease-in-out infinite",
+          }}>
+            <span style={{ fontSize:10, letterSpacing:"2px", color:"#9333ea", textTransform:"uppercase" }}>scroll</span>
+            <div style={{ width:1, height:30, background:"linear-gradient(#9333ea,transparent)" }}/>
+          </div>
+        </section>
+
+        {/* ══════════════════════════════════════════════════
+            SEÇÃO 2 — ABOUT
+        ══════════════════════════════════════════════════ */}
+        <section id="about" data-id="about" style={{
+          minHeight:"100vh", position:"relative", zIndex:1,
+          display:"flex", alignItems:"center",
+          padding:"120px 48px",
+        }}>
+          {/* Glassmorphism card */}
+          <div style={{
+            maxWidth:1100, width:"100%", margin:"0 auto",
+            background:"rgba(255,255,255,0.45)",
+            backdropFilter:"blur(24px)",
+            borderRadius:32, padding:"64px",
+            border:"1px solid rgba(255,255,255,0.75)",
+            boxShadow:"0 12px 60px rgba(147,51,234,0.1)",
+            ...fadeIn("about"),
+          }}>
+            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:72, alignItems:"start" }}>
+
+              {/* Left */}
+              <div>
+                <p style={{ fontSize:11, color:"#b06fd4", letterSpacing:"3px", textTransform:"uppercase", marginBottom:16 }}>
+                  about me
+                </p>
+                <h2 style={{
+                  fontSize:"clamp(36px,4.5vw,60px)", fontWeight:900,
+                  color:"#1a0030", letterSpacing:"-2px", lineHeight:0.95,
+                  textTransform:"uppercase", marginBottom:32,
+                }}>
+                  DESIGNER<br/>
+                  <span style={{ WebkitTextStroke:"2px #e879f9", color:"transparent" }}>&</span>
+                  {" "}DEV
+                </h2>
+                <p style={{ fontSize:16, color:"#4a2060", lineHeight:1.9, marginBottom:18 }}>
+                  Sou desenvolvedora web apaixonada por criar interfaces que unem estética e funcionalidade. Cada projeto é uma oportunidade de transformar ideias em experiências digitais marcantes.
+                </p>
+                <p style={{ fontSize:16, color:"#4a2060", lineHeight:1.9 }}>
+                  Trabalho com React, Three.js e tecnologias modernas para entregar produtos que impressionam — do design ao deploy.
+                </p>
+              </div>
+
+              {/* Right: skills */}
+              <div style={{ paddingTop:8 }}>
+                {[
+                  { label:"Frontend Development", pct:90 },
+                  { label:"UI/UX Design",          pct:80 },
+                  { label:"React & Three.js",       pct:85 },
+                  { label:"Motion & Animation",     pct:75 },
+                ].map((sk,i) => (
+                  <div key={i} style={{ marginBottom:30 }}>
+                    <div style={{ display:"flex", justifyContent:"space-between", marginBottom:8 }}>
+                      <span style={{ fontSize:12, fontWeight:700, color:"#2d1a4a", letterSpacing:"0.5px", textTransform:"uppercase" }}>
+                        {sk.label}
+                      </span>
+                      <span style={{ fontSize:12, color:"#b06fd4" }}>{sk.pct}%</span>
+                    </div>
+                    <div style={{ height:2, background:"rgba(192,132,252,0.2)", borderRadius:2, overflow:"hidden" }}>
+                      <div style={{
+                        height:"100%", borderRadius:2,
+                        background:"linear-gradient(90deg,#9333ea,#e879f9)",
+                        width: visible["about"] ? `${sk.pct}%` : "0%",
+                        transition:`width 1.4s ease ${0.2+i*0.15}s`,
+                      }}/>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ══════════════════════════════════════════════════
+            SEÇÃO 2.5 — PROJECTS
+        ══════════════════════════════════════════════════ */}
+        <section id="projects" data-id="projects" style={{
+          minHeight:"100vh", position:"relative", zIndex:1,
+          padding:"120px 48px",
+          display:"flex", flexDirection:"column", alignItems:"center",
+        }}>
+          <div style={{ textAlign:"center", marginBottom:64, ...fadeIn("projects") }}>
+            <p style={{ fontSize:11, color:"#b06fd4", letterSpacing:"3px", textTransform:"uppercase", marginBottom:16 }}>
+              portfólio
+            </p>
+            <h2 style={{
+              fontSize:"clamp(40px,6vw,80px)", fontWeight:900,
+              color:"#1a0030", letterSpacing:"-2.5px",
+              textTransform:"uppercase", margin:0, lineHeight:1,
+            }}>
+              PROJETOS
+            </h2>
+          </div>
+
+          <div style={{
+            display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(300px,1fr))",
+            gap:24, maxWidth:1100, width:"100%",
+          }}>
+            {PROJECTS.map((p,i) => (
+              <div key={i} style={{
+                background:"rgba(255,255,255,0.5)",
+                backdropFilter:"blur(20px)",
+                borderRadius:24, padding:"36px 32px",
+                border:"1px solid rgba(255,255,255,0.75)",
+                boxShadow:"0 8px 32px rgba(147,51,234,0.07)",
+                cursor:"pointer",
+                ...fadeIn("projects", i*0.15),
+                transition: [
+                  `opacity 0.9s ease ${i*0.15}s`,
+                  `transform 0.9s ease ${i*0.15}s`,
+                  "box-shadow 0.25s",
+                  "translate 0.25s",
+                ].join(", "),
+              }}
+                onMouseEnter={e=>{
+                  e.currentTarget.style.boxShadow="0 24px 56px rgba(147,51,234,0.16)";
+                  e.currentTarget.style.translate="0 -6px";
+                }}
+                onMouseLeave={e=>{
+                  e.currentTarget.style.boxShadow="0 8px 32px rgba(147,51,234,0.07)";
+                  e.currentTarget.style.translate="0 0";
+                }}
+              >
+                <div style={{
+                  width:48, height:48, borderRadius:14,
+                  background:"linear-gradient(135deg,rgba(233,121,249,0.2),rgba(147,51,234,0.3))",
+                  display:"flex", alignItems:"center", justifyContent:"center",
+                  fontSize:22, marginBottom:22,
+                  border:"1px solid rgba(192,132,252,0.3)",
+                }}>
+                  {p.emoji}
+                </div>
+                <h3 style={{ fontSize:20, fontWeight:800, color:"#1a0030", margin:"0 0 12px", letterSpacing:"-0.5px" }}>
+                  {p.title}
+                </h3>
+                <p style={{ fontSize:14, color:"#6b4d8a", lineHeight:1.75, margin:"0 0 22px" }}>
+                  {p.desc}
+                </p>
+                <div style={{ display:"flex", gap:8, flexWrap:"wrap" }}>
+                  {p.tags.map(tag => (
+                    <span key={tag} style={{
+                      padding:"4px 12px", borderRadius:20, fontSize:11, fontWeight:700,
+                      background:"rgba(147,51,234,0.1)", color:"#9333ea",
+                      border:"1px solid rgba(147,51,234,0.2)",
+                      letterSpacing:"0.5px", textTransform:"uppercase",
+                    }}>
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ══════════════════════════════════════════════════
+            SEÇÃO 3 — CONTACT
+        ══════════════════════════════════════════════════ */}
+        <section id="contact" data-id="contact" style={{
+          minHeight:"100vh", position:"relative", zIndex:1,
+          display:"flex", alignItems:"center", justifyContent:"center",
+          padding:"120px 48px",
+        }}>
+          <div style={{ maxWidth:640, width:"100%", textAlign:"center" }}>
+
+            <div style={fadeIn("contact")}>
+              <p style={{ fontSize:11, color:"#b06fd4", letterSpacing:"3px", textTransform:"uppercase", marginBottom:18 }}>
+                let's talk
+              </p>
+              <h2 style={{
+                fontSize:"clamp(52px,8vw,100px)", fontWeight:900,
+                color:"#1a0030", letterSpacing:"-3px", lineHeight:0.9,
+                textTransform:"uppercase", margin:"0 0 28px",
+              }}>
+                GET IN<br/>
+                <span style={{ WebkitTextStroke:"2.5px #e879f9", color:"transparent" }}>TOUCH</span>
+              </h2>
+              <p style={{ fontSize:17, color:"#6b4d8a", lineHeight:1.75, marginBottom:52 }}>
+                Tem um projeto em mente? Vamos construir algo incrível juntos.
+              </p>
+            </div>
+
+            <div style={{
+              borderRadius:28, overflow:"hidden",
+              border:"1px solid rgba(192,132,252,0.25)",
+              ...fadeIn("contact",0.3),
+            }}>
+              {[
+                { icon:"✉️", label:"Email",    value:"amanda@exemplo.com",  href:"mailto:amanda@exemplo.com" },
+                { icon:"💼", label:"LinkedIn", value:"/in/amandabraun",     href:"https://linkedin.com" },
+                { icon:"🐙", label:"GitHub",   value:"@amandabraun",        href:"https://github.com" },
+              ].map((item,i) => (
+                <a key={i} href={item.href} target="_blank" rel="noopener noreferrer" style={{
+                  display:"flex", alignItems:"center", gap:20,
+                  padding:"22px 32px", textDecoration:"none",
+                  background:"rgba(255,255,255,0.55)", backdropFilter:"blur(16px)",
+                  borderBottom: i<2 ? "1px solid rgba(192,132,252,0.15)" : "none",
+                  transition:"background 0.3s, padding-left 0.25s",
+                }}
+                  onMouseEnter={e=>{e.currentTarget.style.background="rgba(147,51,234,0.07)";e.currentTarget.style.paddingLeft="40px";}}
+                  onMouseLeave={e=>{e.currentTarget.style.background="rgba(255,255,255,0.55)";e.currentTarget.style.paddingLeft="32px";}}
+                >
+                  <span style={{ fontSize:22 }}>{item.icon}</span>
+                  <div style={{ textAlign:"left", flex:1 }}>
+                    <div style={{ fontSize:10, color:"#b06fd4", letterSpacing:"1.5px", textTransform:"uppercase", fontWeight:700 }}>
+                      {item.label}
+                    </div>
+                    <div style={{ fontSize:15, color:"#1a0030", fontWeight:600, marginTop:3 }}>
+                      {item.value}
+                    </div>
+                  </div>
+                  <span style={{ color:"#e879f9", fontSize:18 }}>↗</span>
+                </a>
               ))}
             </div>
-          )}
-        </div>
-      </div>
+
+            <p style={{ ...fadeIn("contact",0.5), marginTop:52, fontSize:13, color:"#b06fd4" }}>
+              © 2026 Amanda Braun — Feito com ♥
+            </p>
+          </div>
+        </section>
 
       <style>{`
-        @keyframes bounce {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(6px); }
+        *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+        html { scroll-behavior:smooth; }
+        html, body { 
+          height:auto; 
+          overflow-y:scroll;   /* força a scrollbar aparecer */
+          overflow-x:hidden;
         }
+        ::-webkit-scrollbar { width:5px; }
+        ::-webkit-scrollbar-track { background:transparent; }
+        ::-webkit-scrollbar-thumb { background:rgba(233,121,249,0.4); border-radius:3px; }
+        @keyframes bounce {
+          0%,100% { transform:translateX(-50%) translateY(0); }
+          50%      { transform:translateX(-50%) translateY(8px); }
+        }
+        @keyframes blob1 {
+        0%,100% { transform:translate(-50%,-50%) scale(1); }
+        33%     { transform:translate(-40%,-60%) scale(1.15); }
+        66%     { transform:translate(-60%,-40%) scale(0.9); }
+      }
+      @keyframes blob2 {
+        0%,100% { transform:translate(-50%,-50%) scale(1); }
+        33%     { transform:translate(-60%,-55%) scale(1.1); }
+        66%     { transform:translate(-40%,-45%) scale(0.95); }
+      }
+      @keyframes blob3 {
+        0%,100% { transform:translate(-50%,-50%) scale(1); }
+        33%     { transform:translate(-45%,-60%) scale(1.2); }
+        66%     { transform:translate(-55%,-40%) scale(0.85); }
+      }
+      @keyframes blob4 {
+        0%,100% { transform:translate(-50%,-50%) scale(1); }
+        50%     { transform:translate(-55%,-60%) scale(1.1); }
+      }
+      @keyframes blob5 {
+        0%,100% { transform:translate(-50%,-50%) scale(1); }
+        50%     { transform:translate(-45%,-45%) scale(1.15); }
+      }
       `}</style>
-    </div>
-  );
-}
+      </div>
+    );
+  }
