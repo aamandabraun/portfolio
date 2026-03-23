@@ -1,16 +1,28 @@
-# React + Vite
+# Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> 🚧 **Em desenvolvimento** — [Acesse](https://portfolio-mwar6tlul-aamandabrauns-projects.vercel.app/)
 
-Currently, two official plugins are available:
+Repositório dedicado ao desenvolvimento do meu portfólio, uma experiência visual marcante com animações, mesh gradients e scroll fluido para apresentar meus projetos e habilidades.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<br>
 
-## React Compiler
+## 🛠️ Tecnologias & Ferramentas
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Core:** React 18+
+- **Build Tool:** Vite
+- **Runtime:** Node.js (v24+)
+- **Animações:** CSS Blobs, Three.js
+- **Estilização:** CSS-in-JS (inline styles)
 
-## Expanding the ESLint configuration
+<br>
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 📌 Status das Seções
+
+- [x] Hero com nome e blobs animados
+- [x] Barra de progresso com scroll
+- [ ] Seção About com skills
+- [ ] Seção Projetos
+- [ ] Seção Contato
+- [ ] Responsividade mobile
+- [ ] Deploy final no Vercel
+```
