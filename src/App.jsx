@@ -34,8 +34,8 @@ export default function Portfolio() {
       const main = document.getElementById("blob-main");
       const sec  = document.getElementById("blob-secondary");
       if (main) {
-        main.style.left = `${50 + (x - 50) * 0.5}%`;
-        main.style.top  = `${50 + (y - 50) * 0.5}%`;
+        main.style.left = `${50 + (x - 50) * 0.6}%`;
+        main.style.top  = `${50 + (y - 50) * 0.4}%`;
       }
       if (sec) {
         sec.style.left = `${50 + (x - 50) * -0.4}%`;
@@ -53,8 +53,8 @@ export default function Portfolio() {
       setScrollProgress((current / total) * 100);
       const main = document.getElementById("blob-main");
       const sec  = document.getElementById("blob-secondary");
-      if (main) main.style.width = `${500 + (current / total) * 250}px`;
-      if (sec)  sec.style.width  = `${300 - (current / total) * 100}px`;
+      if (main) main.style.width  = `400px`; main.style.height = `550px`;
+      if (sec)  sec.style.width  = `900px`; sec.style.height = `750px`;
     };
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
@@ -69,18 +69,18 @@ export default function Portfolio() {
   });
 
   return (
-    <div style={{ fontFamily:"'Sora', sans-serif" }}>
+    <div style={{ fontFamily:"'Bernoru Ultra', sans-serif" }}>
 
       {/* ── BLOBS ── */}
       <div style={{
         position:"fixed", inset:0, zIndex:1, pointerEvents:"none",
-        background:"#fdf8ff", overflow:"visible",
+        overflow:"visible",
       }}>
         <div id="blob-main" style={{
           position:"absolute",
-          width:900, height:750,
+          width:400, height:550,
           borderRadius:"30% 70% 55% 45% / 60% 35% 65% 40%",
-          background:"conic-gradient(from 0deg, #ff3d7f, #ff6b35, #ffaa00, #c026d3, #6366f1, #06b6d4, #ff3d7f)",
+          background:"conic-gradient(from 0deg, #F85C70, #FF8A5B, #C93C9B, #7A3DF0, #3F5BD9, #2EC4B6, #d12e93)",
           filter:"blur(45px)",
           opacity:0.85,
           top:"50%", left:"50%",
@@ -89,12 +89,11 @@ export default function Portfolio() {
           animation:"blobMorph 5s ease-in-out infinite",
         }}/>
 
-        {/* Blob secundário */}
         <div id="blob-secondary" style={{
           position:"absolute",
-          width:400, height:550,
+          width:900, height:750,
           borderRadius:"70% 30% 40% 60% / 35% 65% 35% 65%",
-          background:"conic-gradient(from 180deg, #06b6d4, #6366f1, #c026d3, #ff3d7f, #06b6d4)",
+          background:"conic-gradient(from 180deg, #FF8A5B, #6366f1, #c026d3, #ff3d7f, #06b6d4)",
           filter:"blur(55px)",
           opacity:0.6,
           top:"50%", left:"50%",
@@ -117,7 +116,7 @@ export default function Portfolio() {
         }}>
           <div style={{
             height:"100%", width:`${scrollProgress}%`,
-            background:"linear-gradient(90deg, #ff3d7f, #ff6b35, #ffaa00)",
+            background:"linear-gradient(90deg, #ff9cf2, #ff35da, #ff00d0)",
             transition:"width 0.1s linear",
             position:"relative",
           }}>
@@ -125,13 +124,13 @@ export default function Portfolio() {
               position:"absolute", right:0, top:"50%",
               transform:"translateY(-50%)",
               width:6, height:6, borderRadius:"50%",
-              background:"#ffffff",
-              boxShadow:"0 0 8px 3px rgba(255,255,255,0.9), 0 0 16px 4px rgba(255,180,100,0.6)",
+              background:"#ffffffcb",
+              boxShadow:"0 0 8px 3px rgba(255, 255, 255, 0.54), 0 0 16px 4px rgba(255, 100, 219, 0.6)",
             }}/>
           </div>
         </div>
         <div style={{ display:"flex", alignItems:"center", gap:18 }}>
-          <span style={{ fontSize:11, color:"#b06fd4", letterSpacing:"2px", textTransform:"uppercase" }}>
+          <span style={{ fontSize:11, color:"#ffffff", letterSpacing:"2px", textTransform:"uppercase" }}>
             Creative Dev
           </span>
         </div>
@@ -152,20 +151,16 @@ export default function Portfolio() {
 
       {/* ── HERO ── */}
       <section id="works" data-id="works" style={{
-        minHeight:"100vh", position:"relative", zIndex:2,
+        minHeight:"100vh", position:"relative", zIndex:3,
         display:"flex", alignItems:"flex-end",
-        padding:"0 48px 64px", overflow:"hidden",
+        padding:"0 48px 64px",
       }}>
         <div style={{ flex:1, ...fadeIn("works") }}>
-          <p style={{ fontSize:11, color:"#b06fd4", letterSpacing:"3px", textTransform:"uppercase", marginBottom:14 }}>
-            creative
-          </p>
           <h1 style={{
             fontSize:"clamp(56px,9vw,120px)", fontWeight:900,
             letterSpacing:"-3px", lineHeight:0.88, margin:0,
             textTransform:"uppercase",
-            background:"linear-gradient(135deg, #c026d3, #ff3d7f, #ff6b35, #ff9a00)",
-            WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", backgroundClip:"text",
+            color:"rgba(255, 255, 255, 0.88)"
           }}>
             AMANDA<br/>BRAUN
           </h1>
@@ -174,7 +169,6 @@ export default function Portfolio() {
         <div style={{ maxWidth:380, textAlign:"right", ...fadeIn("works",0.25) }}>
           <div style={{
             display:"inline-flex", alignItems:"center", gap:8,
-            background:"rgba(255,255,255,0.65)", backdropFilter:"blur(12px)",
             borderRadius:30, padding:"6px 16px 6px 10px",
             border:"1px solid rgba(192,132,252,0.35)", marginBottom:22,
           }}>
@@ -182,16 +176,16 @@ export default function Portfolio() {
             <span style={{ fontSize:12, color:"#7e22ce" }}>available for work</span>
           </div>
           <p style={{
-            fontSize:"clamp(15px,1.8vw,20px)", color:"#1a0030",
+            fontSize:"clamp(15px,1.8vw,20px)", color:"#ffffff",
             fontWeight:800, lineHeight:1.3, letterSpacing:"-0.3px",
             textTransform:"uppercase", margin:"0 0 24px",
           }}>
-            I BUILD WEBSITES THAT BLEND DESIGN AND CODE INTO MEMORABLE EXPERIENCES.
+              CONSTRUO INTERFACES ONDE O DESIGN ENCONTRA O CÓDIGO. DESENVOLVEDORA
           </p>
           <button onClick={() => scrollTo("contact")} style={{
             padding:"13px 30px", borderRadius:50,
-            border:"2px solid #1a0030", background:"transparent",
-            color:"#1a0030", fontSize:12, fontWeight:700,
+            border:"2px solid #ffffff", background:"transparent",
+            color:"#ffffff", fontSize:12, fontWeight:700,
             cursor:"pointer", letterSpacing:"2px",
             textTransform:"uppercase", fontFamily:"inherit", transition:"all 0.25s",
           }}
@@ -214,7 +208,7 @@ export default function Portfolio() {
 
       {/* ── ABOUT ── */}
       <section id="about" data-id="about" style={{
-        minHeight:"100vh", position:"relative", zIndex:2,
+        minHeight:"100vh", position:"relative", zIndex:3,
         display:"flex", alignItems:"center", padding:"180px 48px",
       }}>
         <div style={{
@@ -277,7 +271,7 @@ export default function Portfolio() {
 
       {/* ── PROJECTS ── */}
       <section id="projects" data-id="projects" style={{
-        minHeight:"100vh", position:"relative", zIndex:2,
+        minHeight:"100vh", position:"relative", zIndex:3,
         padding:"180px 48px",
         display:"flex", flexDirection:"column", alignItems:"center",
       }}>
@@ -347,7 +341,7 @@ export default function Portfolio() {
 
       {/* ── CONTACT ── */}
       <section id="contact" data-id="contact" style={{
-        minHeight:"100vh", position:"relative", zIndex:2,
+        minHeight:"100vh", position:"relative", zIndex:3,
         display:"flex", alignItems:"center", justifyContent:"center",
         padding:"180px 48px",
       }}>
