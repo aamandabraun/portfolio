@@ -7,7 +7,7 @@ const PROJECTS = [
 ];
 
 export default function Portfolio() {
-  const [activeSection, setActiveSection] = useState("works");
+  const [activeSection, setActiveSection] = useState("sobre");
   const [visible, setVisible]             = useState({});
   const [scrollProgress, setScrollProgress] = useState(0);
 
@@ -80,7 +80,7 @@ export default function Portfolio() {
           position:"absolute",
           width:400, height:550,
           borderRadius:"30% 70% 55% 45% / 60% 35% 65% 40%",
-          background:"conic-gradient(from 0deg, #F85C70, #FF8A5B, #C93C9B, #7A3DF0, #3F5BD9, #2EC4B6, #d12e93)",
+          background:"conic-gradient(from 0deg, #1E3A8A, #6D28D9, #C93C9B)",
           filter:"blur(45px)",
           opacity:0.85,
           top:"50%", left:"50%",
@@ -135,11 +135,11 @@ export default function Portfolio() {
           </span>
         </div>
         <div style={{ display:"flex", gap:32 }}>
-          {["works","about","contact"].map(s => (
+          {["sobre","projetos","contato"].map(s => (
             <button key={s} onClick={() => scrollTo(s)} style={{
               background:"none", border:"none", cursor:"pointer",
               fontSize:13, letterSpacing:"1px", textTransform:"lowercase",
-              color: activeSection===s ? "#9333ea" : "#b06fd4",
+              color: activeSection===s ? "#ea33d2" : "#d46fbb",
               fontWeight: activeSection===s ? 700 : 400,
               fontFamily:"inherit", padding:0, transition:"color 0.3s",
             }}>
@@ -150,12 +150,12 @@ export default function Portfolio() {
       </nav>
 
       {/* ── HERO ── */}
-      <section id="works" data-id="works" style={{
+      <section id="sobre" data-id="sobre" style={{
         minHeight:"100vh", position:"relative", zIndex:3,
         display:"flex", alignItems:"flex-end",
         padding:"0 48px 64px",
       }}>
-        <div style={{ flex:1, ...fadeIn("works") }}>
+        <div style={{ flex:1, ...fadeIn("sobre") }}>
           <h1 style={{
             fontSize:"clamp(56px,9vw,120px)", fontWeight:900,
             letterSpacing:"-3px", lineHeight:0.88, margin:0,
@@ -166,33 +166,25 @@ export default function Portfolio() {
           </h1>
         </div>
 
-        <div style={{ maxWidth:380, textAlign:"right", ...fadeIn("works",0.25) }}>
-          <div style={{
-            display:"inline-flex", alignItems:"center", gap:8,
-            borderRadius:30, padding:"6px 16px 6px 10px",
-            border:"1px solid rgba(192,132,252,0.35)", marginBottom:22,
-          }}>
-            <span style={{ width:8, height:8, borderRadius:"50%", background:"#22c55e", boxShadow:"0 0 8px #22c55e" }}/>
-            <span style={{ fontSize:12, color:"#7e22ce" }}>available for work</span>
-          </div>
+        <div style={{ maxWidth:380, textAlign:"right", ...fadeIn("sobre",0.25) }}>
           <p style={{
             fontSize:"clamp(15px,1.8vw,20px)", color:"#ffffff",
             fontWeight:800, lineHeight:1.3, letterSpacing:"-0.3px",
             textTransform:"uppercase", margin:"0 0 24px",
           }}>
-              CONSTRUO INTERFACES ONDE O DESIGN ENCONTRA O CÓDIGO. DESENVOLVEDORA
+            DESENVOLVIMENTO FULLSTACK ORIENTADO A EXPERIÊNCIA — DO FLUXO AO DETALHE QUE NINGUÉM PERCEBE, MAS TODO MUNDO SENTE.
           </p>
-          <button onClick={() => scrollTo("contact")} style={{
+          <button onClick={() => scrollTo("contato")} style={{
             padding:"13px 30px", borderRadius:50,
             border:"2px solid #ffffff", background:"transparent",
             color:"#ffffff", fontSize:12, fontWeight:700,
             cursor:"pointer", letterSpacing:"2px",
             textTransform:"uppercase", fontFamily:"inherit", transition:"all 0.25s",
           }}
-            onMouseEnter={e=>{e.target.style.background="#1a0030";e.target.style.color="#fdf6ff";}}
-            onMouseLeave={e=>{e.target.style.background="transparent";e.target.style.color="#1a0030";}}
+            onMouseEnter={e=>{e.target.style.background="#ffffff";e.target.style.color="#862d9f";}}
+            onMouseLeave={e=>{e.target.style.background="transparent";e.target.style.color="#ffffff";}}
           >
-            CONTACT ME ↗
+            ENTRE EM CONTATO ↗
           </button>
         </div>
 
@@ -206,8 +198,8 @@ export default function Portfolio() {
         </div>
       </section>
 
-      {/* ── ABOUT ── */}
-      <section id="about" data-id="about" style={{
+      {/* ── SOBRE ── */}
+      <section id="projetos" data-id="projetos" style={{
         minHeight:"100vh", position:"relative", zIndex:3,
         display:"flex", alignItems:"center", padding:"180px 48px",
       }}>
@@ -217,13 +209,10 @@ export default function Portfolio() {
           borderRadius:32, padding:"64px",
           border:"1px solid rgba(255,255,255,0.75)",
           boxShadow:"0 12px 60px rgba(147,51,234,0.1)",
-          ...fadeIn("about"),
+          ...fadeIn("projetos"),
         }}>
           <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:72, alignItems:"start" }}>
             <div>
-              <p style={{ fontSize:11, color:"#b06fd4", letterSpacing:"3px", textTransform:"uppercase", marginBottom:16 }}>
-                about me
-              </p>
               <h2 style={{
                 fontSize:"clamp(36px,4.5vw,60px)", fontWeight:900,
                 color:"#1a0030", letterSpacing:"-2px", lineHeight:0.95,
@@ -234,18 +223,16 @@ export default function Portfolio() {
                 {" "}DEV
               </h2>
               <p style={{ fontSize:16, color:"#4a2060", lineHeight:1.9, marginBottom:18 }}>
-                Sou desenvolvedora web apaixonada por criar interfaces que unem estética e funcionalidade. Cada projeto é uma oportunidade de transformar ideias em experiências digitais marcantes.
-              </p>
+                Formada em Comércio Exterior, formanda em Análise e Desenvolvimento de Sistemas e acrobata nas horas vagas.
+                </p>
               <p style={{ fontSize:16, color:"#4a2060", lineHeight:1.9 }}>
-                Trabalho com React, Three.js e tecnologias modernas para entregar produtos que impressionam — do design ao deploy.
+                Tenho construído uma base consistente em Estrutura de Dados, Programação Orientada a Objetos e desenvolvimento de aplicações web, atuando tanto no front quanto no back-end.              
               </p>
             </div>
             <div style={{ paddingTop:8 }}>
               {[
-                { label:"Frontend Development", pct:90 },
-                { label:"UI/UX Design",          pct:80 },
-                { label:"React & Three.js",       pct:85 },
-                { label:"Motion & Animation",     pct:75 },
+                { label:"Designer imobiliária", pct: 2019 - 2025 },
+                { label:"Analista de migração", pct: 2025 },
               ].map((sk,i) => (
                 <div key={i} style={{ marginBottom:30 }}>
                   <div style={{ display:"flex", justifyContent:"space-between", marginBottom:8 }}>
@@ -258,7 +245,7 @@ export default function Portfolio() {
                     <div style={{
                       height:"100%", borderRadius:2,
                       background:"linear-gradient(90deg,#9333ea,#e879f9)",
-                      width: visible["about"] ? `${sk.pct}%` : "0%",
+                      width: visible["projetos"] ? `${sk.pct}%` : "0%",
                       transition:`width 1.4s ease ${0.2+i*0.15}s`,
                     }}/>
                   </div>
@@ -298,7 +285,7 @@ export default function Portfolio() {
               border:"1px solid rgba(255,255,255,0.75)",
               boxShadow:"0 8px 32px rgba(147,51,234,0.07)",
               cursor:"pointer",
-              ...fadeIn("projects", i*0.15),
+              ...fadeIn("projetos", i*0.15),
               transition:[
                 `opacity 0.9s ease ${i*0.15}s`,
                 `transform 0.9s ease ${i*0.15}s`,
@@ -339,14 +326,14 @@ export default function Portfolio() {
         </div>
       </section>
 
-      {/* ── CONTACT ── */}
-      <section id="contact" data-id="contact" style={{
+      {/* ── CONTATO ── */}
+      <section id="contato" data-id="contato" style={{
         minHeight:"100vh", position:"relative", zIndex:3,
         display:"flex", alignItems:"center", justifyContent:"center",
         padding:"180px 48px",
       }}>
         <div style={{ maxWidth:640, width:"100%", textAlign:"center" }}>
-          <div style={fadeIn("contact")}>
+          <div style={fadeIn("contato")}>
             <p style={{ fontSize:11, color:"#b06fd4", letterSpacing:"3px", textTransform:"uppercase", marginBottom:18 }}>
               let's talk
             </p>
@@ -365,7 +352,7 @@ export default function Portfolio() {
           <div style={{
             borderRadius:28, overflow:"hidden",
             border:"1px solid rgba(192,132,252,0.25)",
-            ...fadeIn("contact",0.3),
+            ...fadeIn("contato",0.3),
           }}>
             {[
               { icon:"✉️", label:"Email",    value:"amanda@exemplo.com", href:"mailto:amanda@exemplo.com" },
@@ -395,7 +382,7 @@ export default function Portfolio() {
               </a>
             ))}
           </div>
-          <p style={{ ...fadeIn("contact",0.5), marginTop:52, fontSize:13, color:"#b06fd4" }}>
+          <p style={{ ...fadeIn("contato",0.5), marginTop:52, fontSize:13, color:"#b06fd4" }}>
             © 2026 Amanda Braun — Feito com ♥
           </p>
         </div>
