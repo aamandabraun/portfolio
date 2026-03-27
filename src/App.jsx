@@ -108,13 +108,13 @@ export default function Portfolio() {
       <div style={{ position: "fixed", inset: 0, zIndex: 1, pointerEvents: "none", overflow: "visible" }}>
         <div id="blob-main" style={{
           position: "absolute",
-          width: 400, height: 550,
+          width: 450, height: 600,
           borderRadius: "30% 70% 55% 45% / 60% 35% 65% 40%",
           background: dark
-            ? "conic-gradient(from 0deg, #1E1B4B, #3730A3, #4338CA)"
-            : "conic-gradient(from 0deg, #7DD3FC, #FDBA74, #FB923C)",
-          filter: "blur(45px)",
-          opacity: dark ? 0.9 : 0.75,
+            ? "conic-gradient(from 0deg, #1E1B4B, #363084, #282083)"
+            : "conic-gradient(from 0deg, #7DD3FC, #f874fd, #e8fb3cc6)",
+          filter: "blur(30px)", 
+          opacity: dark ? 1 : 1, 
           top: "50%", left: "50%",
           transform: "translate(-50%, -50%)",
           transition: "top 0.15s ease, left 0.15s ease, background 0.6s ease, opacity 0.6s ease",
@@ -123,13 +123,13 @@ export default function Portfolio() {
 
         <div id="blob-secondary" style={{
           position: "absolute",
-          width: 900, height: 750,
+          width: 950, height: 800,
           borderRadius: "70% 30% 40% 60% / 35% 65% 35% 65%",
           background: dark
-            ? "conic-gradient(from 180deg, #312E81, #4338CA, #3730A3, #37336b, #312E81)"
-            : "conic-gradient(from 180deg, #FAE8FF, #7DD3FC, #A855F7, #FDBA74, #FB923C)",
-          filter: "blur(55px)",
-          opacity: dark ? 0.7 : 0.55,
+            ? "conic-gradient(from 180deg, #312E81, #352ba0, #17116f, #37336b, #312E81)"
+            : "conic-gradient(from 180deg, #FAE8FF, #7DD3FC, #A855F7, #FDBA74, #fbe83c)",
+          filter: "blur(40px)",
+          opacity: dark ? 0.9 : 0.8, // Presença forte no fundo
           top: "50%", left: "50%",
           transform: "translate(-50%, -50%)",
           transition: "top 0.9s ease, left 0.9s ease, background 0.6s ease",
@@ -186,7 +186,7 @@ export default function Portfolio() {
         </div>
 
         <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
-          <span style={{ fontSize: 11, color: dark ? "#C7D2FE" : "#0369A1", letterSpacing: "2px", textTransform: "uppercase" }}>Creative Dev</span>
+          <span style={{ fontSize: 11, color: dark ? "#C7D2FE" : "#0EA5E9", letterSpacing: "2px", textTransform: "uppercase" }}>Creative Dev</span>
         </div>
 
         <div style={{ display: "flex", gap: 32, marginRight: 52 }}>
@@ -272,8 +272,10 @@ export default function Portfolio() {
           transformOrigin: "center center"
         }}>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 72, alignItems: "start" }}>
+
+            {/* COLUNA DA ESQUERDA */}
             <div>
-              <p style={{ fontSize: 11, color: dark ? "#4338CA" : "#0EA5E9", letterSpacing: "3px", textTransform: "uppercase", marginBottom: 16, fontWeight: 600 }}>sobre mim</p>
+              <p style={{ fontSize: 11, color: dark ? "#4338CA" : "#0EA5E9", letterSpacing: "3px", textTransform: "uppercase", marginBottom: 16, fontWeight: 600 }}>sobre</p>
               <h2 style={{ fontFamily: "'Nasalization', 'Century Gothic', sans-serif", fontSize: "clamp(36px,4.5vw,60px)", fontWeight: 900, letterSpacing: "-2px", lineHeight: 0.95, textTransform: "uppercase", marginBottom: 32, ...titleStyle }}>
                 DESIGNER<br />
                 <span style={{ 
@@ -283,9 +285,7 @@ export default function Portfolio() {
                   backgroundImage: "none", 
                   WebkitBackgroundClip: "initial", 
                   display: "inline-block"
-                }}>
-                  &
-                </span>
+                }}>&</span>
                 {" "}DEV
               </h2>
               <p style={{ fontSize: 16, color: dark ? "#C7D2FE" : "#0369A1", lineHeight: 1.9, marginBottom: 18 }}>
@@ -295,26 +295,52 @@ export default function Portfolio() {
                 Tenho construído uma base consistente em Estrutura de Dados, Programação Orientada a Objetos e desenvolvimento de aplicações web, atuando tanto no front quanto no back-end.
               </p>
             </div>
-            <div style={{ paddingTop: 8 }}>
-              {[
-                { label: "Designer imobiliária", years: "Tintas Fischer, 2019 — 2025" },
-                { label: "Analista de migração", years: "Clinicorp Solutions, 2025 — hoje" },
-              ].map((sk, i) => (
-                <div key={i} style={{ marginBottom: 36 }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
-                    <span style={{ fontFamily: "'Nasalization', 'Century Gothic', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "1px", textTransform: "uppercase", color: dark ? "#C7D2FE" : "#0369A1" }}>{sk.label}</span>
-                    <span style={{ fontSize: 12, color: dark ? "#4338CA" : "#0EA5E9" }}>{sk.years}</span>
+
+            {/* COLUNA DA DIREITA*/}
+            <div style={{ paddingTop: 8, display: "flex", flexDirection: "column", height: "100%" }}>
+              <div style={{ flex: 1 }}>
+                {[
+                  { label: "Designer imobiliária", years: "Tintas Fischer, 2019 — 2025" },
+                  { label: "Analista de migração", years: "Clinicorp Solutions, 2025 — hoje" },
+                ].map((sk, i) => (
+                  <div key={i} style={{ marginBottom: 36 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
+                      <span style={{ fontFamily: "'Nasalization', 'Century Gothic', sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "1px", textTransform: "uppercase", color: dark ? "#C7D2FE" : "#0369A1" }}>{sk.label}</span>
+                      <span style={{ fontSize: 12, color: dark ? "#4338CA" : "#0EA5E9" }}>{sk.years}</span>
+                    </div>
+                    <div style={{ height: 1, background: dark ? "rgba(67,56,202,0.25)" : "rgba(14,165,233,0.2)", borderRadius: 1, overflow: "hidden" }}>
+                      <div style={{
+                        height: "100%", borderRadius: 1,
+                        background: dark ? "linear-gradient(90deg,#3730A3,#C7D2FE)" : "linear-gradient(90deg,#0369A1,#7DD3FC)",
+                        width: visible["sobre"] ? "100%" : "0%",
+                        transition: `width 1.6s ease ${0.3 + i * 0.2}s`,
+                      }} />
+                    </div>
                   </div>
-                  <div style={{ height: 1, background: dark ? "rgba(67,56,202,0.25)" : "rgba(14,165,233,0.2)", borderRadius: 1, overflow: "hidden" }}>
-                    <div style={{
-                      height: "100%", borderRadius: 1,
-                      background: dark ? "linear-gradient(90deg,#3730A3,#C7D2FE)" : "linear-gradient(90deg,#0369A1,#7DD3FC)",
-                      width: visible["sobre"] ? "100%" : "0%",
-                      transition: `width 1.6s ease ${0.3 + i * 0.2}s`,
-                    }} />
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
+
+              {/* ── FOTO ── */}
+              <div style={{ 
+                marginTop: -65,
+                width: "100%",
+                display: "flex",
+                justifyContent: "flex-end",
+                opacity: visible["sobre"] ? 1 : 0,
+                transform: visible["sobre"] ? "translateY(0)" : "translateY(20px)",
+                transition: "all 1s ease 0.6s"
+              }}>
+                <img 
+                  src="/AMANDA.png" alt="Amanda"
+                  style={{ 
+                    maxWidth: "400px", 
+                    height: "auto",
+                    filter: dark ? "drop-shadow(0 0 20px rgba(67,56,202,0.2))" : "none",
+                    WebkitMaskImage: "linear-gradient(to bottom, black 80%, transparent 100%)",
+                    maskImage: "linear-gradient(to bottom, black 80%, transparent 100%)"
+                  }} 
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -393,7 +419,7 @@ export default function Portfolio() {
           display: "flex", 
           alignItems: "center",
           justifyContent: "center", 
-          padding: "70px 48px 0.5px 48px"
+          padding: "70px 48px -3px 48px"
         }}>
           <div style={{ 
             width: "100%", 
@@ -407,13 +433,13 @@ export default function Portfolio() {
           }}>
           <div style={fadeIn("contato")}>
             <p style={{ fontSize: 11, color: dark ? "#4338CA" : "#0EA5E9", letterSpacing: "3px", textTransform: "uppercase", marginBottom: 18, fontWeight: 600 }}>let's talk</p>
-            <h2 style={{ fontFamily: "'Nasalization', 'Century Gothic', sans-serif", fontSize: "clamp(52px,8vw,100px)", fontWeight: 900, color: dark ? "#EEF2FF" : "#0369A1", letterSpacing: "-3px", lineHeight: 0.9, textTransform: "uppercase", margin: "0 0 28px" }}>
+            <h2 style={{ fontFamily: "'Nasalization', 'Century Gothic', sans-serif", fontSize: "clamp(52px,8vw,100px)", fontWeight: 900, color: dark ? "#EEF2FF" : "#0369A1", letterSpacing: "-3px", lineHeight: 0.9, textTransform: "uppercase", margin: "0 0 28px", ...titleStyle }}>
               ENTRE EM<br />
               <span style={{ 
-                WebkitTextStroke: dark ? "2.5px #4338CA" : "2.5px #0EA5E9", 
+                WebkitTextStroke: dark ? "2.5px #4338CA" : "2.5px unset", 
                 WebkitTextFillColor: "transparent",
-                color: "transparent",
-                WebkitBackgroundClip: "initial",
+                color: dark ? "transparent" : "unset",
+                WebkitBackgroundClip: dark ? "initial" : "text",
                 fontSize: "clamp(52px,8vw,100px)", 
                 fontWeight: 900, 
                 letterSpacing: "25px", 
@@ -435,11 +461,50 @@ export default function Portfolio() {
             ...fadeIn("contato", 0.3) 
           }}>
             {[
-              { icon: "✉️", label: "E-mail", value: "aamandabraun@gmail.com", href: "mailto:aamandabraun@gmail.com" },
-              { icon: "💼", label: "LinkedIn", value: "/aamandabraun", href: "https://www.linkedin.com/in/aamandabraun/" },
-              { icon: "🐙", label: "GitHub", value: "@aamandabraun", href: "https://github.com/aamandabraun" },
+              {
+                icon: (<svg width="24" height="24" viewBox="0 0 24 24" fill={dark ? "#FFFFFF" : "#ff73e8"} xmlns="http://www.w3.org/2000/svg" style={{ display: 'block' }}>
+                    <path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4ZM20 6.04L12 11L4 6.04V18H20V6.04ZM12 9.06L19.25 4.5H4.75L12 9.06Z" fill={dark ? "#FFFFFF" : "#ff73e8"}/></svg>
+                ),
+                label: "E-mail", 
+                value: "aamandabraun@gmail.com", 
+                href: "https://mail.google.com/mail/?view=cm&fs=1&to=aamandabraun@gmail.com"
+              },
+              { 
+                icon: (<svg width="24" height="24" viewBox="0 0 24 24" fill={dark ? "#FFFFFF" : "#ff73e8"} xmlns="http://www.w3.org/2000/svg" style={{ display: 'block' }}>
+                    <path d="M19 3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.11 21 21 20.11 21 19V5C21 3.9 20.11 3 19 3ZM8.32 18.06H5.66V9.06H8.32V18.06ZM6.99 7.94C6.11 7.94 5.39 7.23 5.39 6.35C5.39 5.47 6.11 4.76 6.99 4.76C7.87 4.76 8.58 5.47 8.58 6.35C8.58 7.23 7.87 7.94 6.99 7.94ZM18.34 18.06H15.68V13.68C15.68 12.63 15.66 11.28 14.16 11.28C12.66 11.28 12.63 12.61 12.63 13.61V18.06H9.97V9.06H12.63V10.29H12.67C13.04 9.66 13.92 8.99 15.22 8.99C17.92 8.99 18.34 10.77 18.34 13.06V18.06Z" fill={dark ? "#FFFFFF" : "#ff73e8"}/></svg>
+                ),
+                label: "LinkedIn", 
+                value: "/aamandabraun", 
+                href: "https://www.linkedin.com/in/aamandabraun/" 
+              },
+              { 
+                icon: (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill={dark ? "#FFFFFF" : "#ff73e8"} xmlns="http://www.w3.org/2000/svg" style={{ display: 'block' }}>
+                    <path d="M12 2.25C6.61 2.25 2.25 6.61 2.25 12C2.25 16.32 5.05 19.96 8.95 21.26C9.44 21.35 9.61 21.05 9.61 20.79V19.14C6.9 19.74 6.32 18.08 6.32 18.08C5.87 16.96 5.23 16.66 5.23 16.66C4.34 16.05 5.29 16.06 5.29 16.06C6.27 16.13 6.78 17.06 6.78 17.06C7.65 18.57 9.08 18.13 9.65 17.88C9.74 17.26 9.99 16.83 10.26 16.59C8.08 16.35 5.81 15.5 5.81 11.75C5.81 10.68 6.19 9.8 6.81 9.11C6.71 8.86 6.37 7.86 6.9 6.5C6.9 6.5 7.73 6.24 9.61 7.51C10.4 7.29 11.25 7.18 12.1 7.18C12.95 7.18 13.8 7.29 14.59 7.51C16.47 6.24 17.3 6.5 17.3 6.5C17.83 7.86 17.49 8.86 17.39 9.11C18.02 9.8 18.39 10.68 18.39 11.75C18.39 15.51 16.11 16.35 13.93 16.59C14.28 16.9 14.59 17.49 14.59 18.42V20.79C14.59 21.05 14.77 21.36 15.26 21.26C19.16 19.95 21.96 16.32 21.96 12C21.96 6.61 17.6 2.25 12 2.25Z" fill={dark ? "#FFFFFF" : "#ff73e8"}/></svg>
+                ),
+                label: "GitHub", 
+                value: "@aamandabraun", 
+                href: "https://github.com/aamandabraun" 
+              },
             ].map((item, i) => (
-              <a key={i} href={item.href} target="_blank" rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", gap: 20, padding: "22px 32px", textDecoration: "none", background: dark ? "rgba(30,27,75,0.6)" : "rgba(224,242,254,0.6)", backdropFilter: "blur(16px)", borderBottom: i < 2 ? (dark ? "1px solid rgba(255,255,255,0.1)" : "1px solid rgba(14,165,233,0.15)") : "none", transition: "all 0.3s ease" }}>
+            <a key={i} href={item.href} target="_blank" rel="noopener noreferrer" 
+                style={{ 
+                  display: "flex", alignItems: "center", gap: 20, padding: "22px 32px", 
+                  textDecoration: "none", 
+                  background: dark ? "rgba(30,27,75,0.6)" : "rgba(224,242,254,0.6)", 
+                  borderBottom: i < 2 ? (dark ? "1px solid rgba(255,255,255,0.1)" : "1px solid rgba(14,165,233,0.15)") : "none", 
+                  transition: "all 0.4s ease" 
+                }}
+                onMouseEnter={e => { 
+                  e.currentTarget.style.background = "transparent"; 
+                  e.currentTarget.style.paddingLeft = "40px"; 
+                  e.currentTarget.style.backdropFilter = "blur(4px)"; 
+                }}
+                onMouseLeave={e => { 
+                  e.currentTarget.style.background = dark ? "rgba(30,27,75,0.6)" : "rgba(224,242,254,0.6)"; 
+                  e.currentTarget.style.paddingLeft = "32px"; 
+                  e.currentTarget.style.backdropFilter = "blur(16px)";
+                }}>
                 <span style={{ fontSize: 22 }}>{item.icon}</span>
                 <div style={{ textAlign: "left", flex: 1 }}>
                   <div style={{ fontSize: 10, color: dark ? "#4338CA" : "#0EA5E9", letterSpacing: "1.5px", textTransform: "uppercase", fontWeight: 700 }}>{item.label}</div>
@@ -449,7 +514,7 @@ export default function Portfolio() {
               </a>
             ))}
           </div>
-          <p style={{ ...fadeIn("contato", 0.5), marginTop: 52, fontSize: 13, color: dark ? "#4338CA" : "#0EA5E9" }}>© 2026 Amanda Braun</p>
+          <p style={{ ...fadeIn("contato", 0.5), marginTop: 24, fontSize: 13, color: dark ? "#4338CA" : "#0EA5E9" }}>© 2026 Amanda Braun</p>
         </div>
       </section>
 
