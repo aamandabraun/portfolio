@@ -186,7 +186,7 @@ export default function Portfolio() {
         </div>
 
         <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
-          <span style={{ fontSize: 11, color: dark ? "#C7D2FE" : "#0EA5E9", letterSpacing: "2px", textTransform: "uppercase" }}>Creative Dev</span>
+          <span style={{ fontSize: 11, color: dark ? "#C7D2FE" : "#0EA5E9", letterSpacing: "2px" }}>aamandabraun.dev</span>
         </div>
 
         <div style={{ display: "flex", gap: 32, marginRight: 52 }}>
@@ -232,7 +232,7 @@ export default function Portfolio() {
           <p style={{ fontSize: "clamp(14px,1.6vw,18px)", color: dark ? "#C7D2FE" : "#0369A1", fontWeight: 500, lineHeight: 1.6, letterSpacing: "0px", margin: "0 0 24px" }}>
             Desenvolvimento fullstack orientado a experiência — do fluxo ao detalhe que ninguém percebe, mas todo mundo sente.
           </p>
-          <button onClick={() => scrollTo("contato")} style={{
+          <button onClick={() => scrollTo("projetos")} style={{
             padding: "13px 30px", borderRadius: 50,
             border: dark ? "2px solid #C7D2FE" : "2px solid #0EA5E9",
             background: "transparent",
@@ -248,7 +248,7 @@ export default function Portfolio() {
               e.target.style.color = dark ? "#C7D2FE" : "#0EA5E9";
             }}
           >
-            ENTRE EM CONTATO ↗
+            DIFERENCIAIS ↗
           </button>
         </div>
 
@@ -292,7 +292,7 @@ export default function Portfolio() {
                 Formada em Comércio Exterior, formanda em Análise e Desenvolvimento de Sistemas e acrobata nas horas vagas.
               </p>
               <p style={{ fontSize: 16, color: dark ? "#C7D2FE" : "#0369A1", lineHeight: 1.9 }}>
-                Tenho construído uma base consistente em Estrutura de Dados, Programação Orientada a Objetos e desenvolvimento de aplicações web, atuando tanto no front quanto no back-end.
+                Desenvolvo projetos que cobrem desde lógica de programação, estrutura de dados em C e POO em Java, até interfaces em React + TypeScript e APIs Node.js em produção.
               </p>
             </div>
 
@@ -300,8 +300,8 @@ export default function Portfolio() {
             <div style={{ paddingTop: 8, display: "flex", flexDirection: "column", height: "100%" }}>
               <div style={{ flex: 1 }}>
                 {[
-                  { label: "Designer imobiliária", years: "Tintas Fischer, 2019 — 2025" },
-                  { label: "Analista de migração", years: "Clinicorp Solutions, 2025 — hoje" },
+                  { label: "Projetista e vendedora", years: "Tintas Fischer, 2019 — 2025" },
+                  { label: "Desenvolvedora", years: "Clinicorp Solutions, 2025 — hoje" },
                 ].map((sk, i) => (
                   <div key={i} style={{ marginBottom: 36 }}>
                     <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
