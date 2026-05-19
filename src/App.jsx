@@ -8,6 +8,7 @@ const PROJECTS = [
     desc: "Plataforma fullstack de clube de livros por assinatura. Backend em Node.js com Prisma + PostgreSQL, pagamentos recorrentes via Stripe com webhooks, autenticação JWT e e-mails transacionais com Resend. Deploy automatizado no Render (Docker) e Vercel, com documentação via Swagger.",
     tags: ["Fullstack", "Stripe", "API REST"],
     site: "https://caixa-do-mundo.vercel.app/",
+    github: "https://github.com/aamandabraun/book-club-api",
     gif: "/demo-caixa.gif",
     wip: false,
   },
@@ -17,6 +18,7 @@ const PROJECTS = [
     desc: "Jogo da memória com mecânicas de caos: cartas que se embaralham, clicks desviados e mesa que vira. Desenvolvido com TypeScript puro, sem frameworks, com animações CSS e lógica de estado customizada. Foco em manipulação do DOM, eventos e controle de tempo.",
     tags: ["Jogo", "Responsivo", "Typescript"],
     site: "https://bicho-solto.vercel.app/",
+    github: "https://github.com/aamandabraun/bicho-solto",
     gif: "/demo-bicho.gif",
     wip: false,
   },
@@ -600,46 +602,73 @@ export default function Portfolio() {
                           <p style={{ fontSize: 13, color: c.desc, lineHeight: 1.85, marginBottom: 22 }}>
                             {p.desc}
                           </p>
-                          {p.site ? (
-                            <a
-                              href={p.site} target="_blank" rel="noopener noreferrer"
-                              onClick={(e) => e.stopPropagation()}
-                              style={{
-                                display: "inline-flex", alignItems: "center", gap: 8,
+                          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                            {p.site ? (
+                                <a href={p.site} target="_blank" rel="noopener noreferrer"
+                                onClick={(e) => e.stopPropagation()}
+                                style={{
+                                  display: "inline-flex", alignItems: "center", gap: 8,
+                                  padding: "10px 22px", borderRadius: 50,
+                                  border: `1.5px solid ${c.btnBorder}`,
+                                  background: "transparent", color: c.btnColor,
+                                  fontSize: 11, fontWeight: 700, letterSpacing: "1.5px",
+                                  textTransform: "uppercase", fontFamily: "'Unbounded', sans-serif",
+                                  textDecoration: "none", transition: "all 0.2s",
+                                }}
+                                onMouseEnter={(e) => {
+                                  e.currentTarget.style.background = dark ? "#C7D2FE" : "#0EA5E9";
+                                  e.currentTarget.style.color = dark ? "#1E1B4B" : "#F0F9FF";
+                                }}
+                                onMouseLeave={(e) => {
+                                  e.currentTarget.style.background = "transparent";
+                                  e.currentTarget.style.color = c.btnColor;
+                                }}
+                              >
+                                ACESSE
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" style={{ marginLeft: 6 }}>
+                                  <path d="M7 17L17 7M17 7H7M17 7V17" stroke={c.btnColor} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                                </svg>
+                              </a>
+                            ) : (
+                              <span style={{
+                                display: "inline-flex", alignItems: "center",
                                 padding: "10px 22px", borderRadius: 50,
-                                border: `1.5px solid ${c.btnBorder}`,
-                                background: "transparent", color: c.btnColor,
+                                border: `1.5px solid ${c.wipBorder}`,
+                                color: c.wipColor,
                                 fontSize: 11, fontWeight: 700, letterSpacing: "1.5px",
                                 textTransform: "uppercase", fontFamily: "'Unbounded', sans-serif",
-                                textDecoration: "none", transition: "all 0.2s",
-                              }}
-                              onMouseEnter={(e) => {
-                                e.currentTarget.style.background = dark ? "#C7D2FE" : "#0EA5E9";
-                                e.currentTarget.style.color = dark ? "#1E1B4B" : "#F0F9FF";
-                              }}
-                              onMouseLeave={(e) => {
-                                e.currentTarget.style.background = "transparent";
-                                e.currentTarget.style.color = c.btnColor;
-                              }}
-                            >
-                              ACESSAR
-                              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" style={{ marginLeft: 6 }}>
-                                <path d="M7 17L17 7M17 7H7M17 7V17" stroke={c.btnColor} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                              </svg>
-                            </a>
-                          ) : (
-                            <span style={{
-                              display: "inline-flex", alignItems: "center",
-                              padding: "10px 22px", borderRadius: 50,
-                              border: `1.5px solid ${c.wipBorder}`,
-                              color: c.wipColor,
-                              fontSize: 11, fontWeight: 700, letterSpacing: "1.5px",
-                              textTransform: "uppercase", fontFamily: "'Unbounded', sans-serif",
-                            }}>
-                              EM BREVE
-                            </span>
-                          )}
-                        </div>
+                              }}>
+                                EM BREVE
+                              </span>
+                            )}
+                            {p.github && (
+                                <a href={p.github} target="_blank" rel="noopener noreferrer"
+                                onClick={(e) => e.stopPropagation()}
+                                style={{
+                                  display: "inline-flex", alignItems: "center", gap: 8,
+                                  padding: "10px 22px", borderRadius: 50,
+                                  border: `1.5px solid ${c.btnBorder}`,
+                                  background: "transparent", color: c.btnColor,
+                                  fontSize: 11, fontWeight: 700, letterSpacing: "1.5px",
+                                  textTransform: "uppercase", fontFamily: "'Unbounded', sans-serif",
+                                  textDecoration: "none", transition: "all 0.2s",
+                                }}
+                                onMouseEnter={(e) => {
+                                  e.currentTarget.style.background = dark ? "#C7D2FE" : "#0EA5E9";
+                                  e.currentTarget.style.color = dark ? "#1E1B4B" : "#F0F9FF";
+                                }}
+                                onMouseLeave={(e) => {
+                                  e.currentTarget.style.background = "transparent";
+                                  e.currentTarget.style.color = c.btnColor;
+                                }}
+                              >
+                                CÓDIGO
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" style={{ marginLeft: 6 }}>
+                                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" stroke={c.btnColor} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                </svg>
+                              </a>
+                            )}
+                          </div>
 
                         {!p.wip && (
                           <div style={{
@@ -659,8 +688,7 @@ export default function Portfolio() {
                   </div>
                 </div>
               </div>
-            );
-          })}
+          </div>)})}
         </div>
       </section>
 
