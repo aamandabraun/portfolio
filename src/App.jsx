@@ -8,7 +8,7 @@ const PROJECTS = [
     desc: "Plataforma fullstack de clube de livros por assinatura. Backend em Node.js com Prisma + PostgreSQL, pagamentos recorrentes via Stripe com webhooks, autenticação JWT e e-mails transacionais com Resend. Deploy automatizado no Render (Docker) e Vercel, com documentação via Swagger.",
     tags: ["Fullstack", "Stripe", "API REST"],
     site: "https://caixa-do-mundo.vercel.app/",
-    gif: null,
+    gif: "/demo-caixa.gif",
     wip: false,
   },
   {
@@ -17,7 +17,7 @@ const PROJECTS = [
     desc: "Jogo da memória com mecânicas de caos: cartas que se embaralham, clicks desviados e mesa que vira. Desenvolvido com TypeScript puro, sem frameworks, com animações CSS e lógica de estado customizada. Foco em manipulação do DOM, eventos e controle de tempo.",
     tags: ["Jogo", "Responsivo", "Typescript"],
     site: "https://bicho-solto.vercel.app/",
-    gif: null,
+    gif: "/demo-bicho.gif",
     wip: false,
   },
   {
@@ -26,7 +26,7 @@ const PROJECTS = [
     desc: "Implementação completa de e-commerce para loja física de tintas em plataforma Moovin. Responsável por cadastro de toda a linha de produtos com descrições, pesos e variações, criação de artes institucionais e configuração de frete e pagamentos. Loja em produção com identidade visual consistente.",
     tags: ["E-commerce", "Negócios", "Product Manager"],
     site: "https://www.lojatintasfischer.com.br/",
-    gif: null,
+    gif: "/demo-tintas.gif",
     wip: false,
   },
   {
@@ -502,13 +502,11 @@ export default function Portfolio() {
                 <div style={{
                   position: "absolute", left: -34, top: 26,
                   width: 13, height: 13, borderRadius: "50%",
-                  background: p.wip ? c.dotWip : c.dot,
+                  background: c.dot,
                   border: `2.5px solid ${dark ? "#1E1B4B" : "#F0F9FF"}`,
                   transition: "transform 0.3s ease, box-shadow 0.3s ease",
                   transform: isOpen ? "scale(1.4)" : "scale(1)",
-                  boxShadow: isOpen
-                    ? `0 0 0 4px ${p.wip ? "rgba(239,159,39,0.25)" : "rgba(67,56,202,0.3)"}`
-                    : "none",
+                  boxShadow: isOpen ? "0 0 0 4px rgba(67,56,202,0.3)" : "none",
                   zIndex: 1,
                 }} />
 
@@ -577,7 +575,7 @@ export default function Portfolio() {
                     transition: "max-height 0.5s cubic-bezier(0.4,0,0.2,1)",
                   }}>
                     <div style={{ padding: "0 20px 24px", borderTop: `1px solid ${c.divider}` }}>
-                      <div className="card-expanded-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, paddingTop: 22, alignItems: "start" }}>
+                      <div className="card-expanded-grid" style={{ display: "grid", gridTemplateColumns: p.wip ? "1fr" : "1fr 1fr", gap: 24, paddingTop: 22, alignItems: "start" }}>
                         <div>
                           <p style={{ fontSize: 13, color: c.desc, lineHeight: 1.85, marginBottom: 22 }}>
                             {p.desc}
@@ -613,23 +611,25 @@ export default function Portfolio() {
                               border: `1.5px solid ${c.wipBorder}`,
                               color: c.wipColor,
                               fontSize: 11, fontWeight: 700, letterSpacing: "1.5px",
-                              textTransform: "uppercase", fontFamily: "'ry GoCentuthic', sans-serif",
+                              textTransform: "uppercase", fontFamily: "'Unbounded', sans-serif",
                             }}>
                               EM BREVE
                             </span>
                           )}
                         </div>
 
-                        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                          <div style={{
-                            borderRadius: 10, border: `1px solid ${c.gifBorder}`,
-                            background: c.gifBg, aspectRatio: "16/5",
-                            display: "flex", flexDirection: "column",
-                            alignItems: "center", justifyContent: "center", gap: 6,
-                            overflow: "hidden",
-                          }}>
+                        {!p.wip && (
+                          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                            <div style={{
+                              borderRadius: 10, border: `1px solid ${c.gifBorder}`,
+                              background: c.gifBg, aspectRatio: "16/5",
+                              display: "flex", flexDirection: "column",
+                              alignItems: "center", justifyContent: "center", gap: 6,
+                              overflow: "hidden",
+                            }}>
+                            </div>
                           </div>
-                        </div>
+                        )}
                       </div>
                     </div>
                   </div>
