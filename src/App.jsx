@@ -1,3 +1,4 @@
+import './App.css';
 import { useEffect, useState } from "react";
 
 const PROJECTS = [
@@ -283,35 +284,12 @@ export default function Portfolio() {
                 ? (dark ? "#C7D2FE" : "#0EA5E9")
                 : (dark ? "#4338CA" : "#7DD3FC"),
               fontWeight: activeSection === s ? 700 : 400,
-              fontFamily: "Unbounded", padding: 0, transition: "color 0.3s",
+              fontFamily: "'Unbounded', sans-serif", padding: 0, transition: "color 0.3s",
             }}>
               {s}
             </button>
           ))}
         </div>
-
-        <button
-          className="hamburger"
-          onClick={() => setMenuOpen((m) => !m)}
-          style={{
-            display: "none", background: "none", border: "none", cursor: "pointer",
-            flexDirection: "column", gap: 5, padding: 4, marginRight: 52,
-          }}
-        >
-          {[0, 1, 2].map((i) => (
-            <span key={i} style={{
-              display: "block", width: 22, height: 1.5,
-              background: dark ? "#C7D2FE" : "#0EA5E9",
-              borderRadius: 2,
-              transform: menuOpen
-                ? i === 0 ? "rotate(45deg) translate(4px, 4px)"
-                : i === 2 ? "rotate(-45deg) translate(4px, -4px)"
-                : "scaleX(0)"
-                : "none",
-              transition: "transform 0.3s",
-            }} />
-          ))}
-        </button>
       </nav>
 
       {menuOpen && (
@@ -328,7 +306,7 @@ export default function Portfolio() {
               background: "none", border: "none", cursor: "pointer",
               fontSize: 14, letterSpacing: "2px", textTransform: "lowercase",
               color: dark ? "#C7D2FE" : "#0EA5E9",
-              fontFamily: "Unbounded", padding: "14px 0", width: "100%",
+              fontFamily: "'Unbounded', sans-serif", padding: "14px 0", width: "100%",
               textAlign: "center",
             }}>
               {s}
@@ -378,7 +356,7 @@ export default function Portfolio() {
               color: dark ? "#C7D2FE" : "#0EA5E9",
               fontSize: 12, fontWeight: 700, cursor: "pointer",
               letterSpacing: "2px", textTransform: "uppercase",
-              fontFamily: "Unbounded", transition: "all 0.25s",
+              fontFamily: "'Unbounded', sans-serif", transition: "all 0.25s",
             }}
             onMouseEnter={(e) => {
               e.target.style.background = dark ? "#C7D2FE" : "#0EA5E9";
@@ -633,7 +611,7 @@ export default function Portfolio() {
                                 border: `1.5px solid ${c.btnBorder}`,
                                 background: "transparent", color: c.btnColor,
                                 fontSize: 11, fontWeight: 700, letterSpacing: "1.5px",
-                                textTransform: "uppercase", fontFamily: "Unbounded,sans-serif",
+                                textTransform: "uppercase", fontFamily: "'Unbounded', sans-serif",
                                 textDecoration: "none", transition: "all 0.2s",
                               }}
                               onMouseEnter={(e) => {
@@ -654,7 +632,7 @@ export default function Portfolio() {
                               border: `1.5px solid ${c.wipBorder}`,
                               color: c.wipColor,
                               fontSize: 11, fontWeight: 700, letterSpacing: "1.5px",
-                              textTransform: "uppercase", fontFamily: "Unbounded,sans-serif",
+                              textTransform: "uppercase", fontFamily: "'ry GoCentuthic', sans-serif",
                             }}>
                               EM BREVE
                             </span>
@@ -816,133 +794,6 @@ export default function Portfolio() {
           <p style={{ marginTop: 24, fontSize: 13, color: dark ? "#4338CA" : "#0EA5E9" }}>© 2026 Amanda Braun</p>
         </div>
       </section>
-
-      {/* ── ESTILOS GLOBAIS + RESPONSIVE ── */}
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&display=swap');
-
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; }
-        html, body {
-          height: auto; overflow-y: scroll; overflow-x: hidden;
-          background: var(--bg); transition: background 0.4s ease;
-        }
-        :root[data-theme="light"] { --bg: #F0F9FF; }
-        :root[data-theme="dark"]  { --bg: #1E1B4B; }
-
-        /* ── SEM SELEÇÃO DE TEXTO ── */
-        * {
-          -webkit-user-select: none;
-          -moz-user-select: none;
-          -ms-user-select: none;
-          user-select: none;
-        }
-
-        /* ── DESKTOP: escala 80% ── */
-        @media (min-width: 641px) {
-          html {
-            font-size: 80%;
-            zoom: 0.8;
-          }
-
-          section[data-id="hero"] {
-              min-height: 130vh !important;
-            }
-        }
-
-        /* Grain overlay */
-        body::after {
-          content: "";
-          position: fixed; inset: 0; z-index: 9999; pointer-events: none;
-          opacity: 0.06; mix-blend-mode: screen;
-          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.80' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)'/%3E%3C/svg%3E");
-          background-size: 180px 180px; background-repeat: repeat;
-        }
-
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(14,165,233,0.4); border-radius: 3px; }
-
-        @keyframes bounce {
-          0%, 100% { transform: translateX(-50%) translateY(0); }
-          50%       { transform: translateX(-50%) translateY(8px); }
-        }
-        @keyframes blobMorph {
-          0%, 100% { border-radius: 30% 70% 55% 45% / 60% 35% 65% 40%; }
-          25%       { border-radius: 55% 45% 30% 70% / 40% 65% 35% 60%; }
-          50%       { border-radius: 70% 30% 60% 40% / 55% 40% 60% 45%; }
-          75%       { border-radius: 45% 55% 70% 30% / 35% 60% 40% 65%; }
-        }
-        @keyframes blobMorph2 {
-          0%, 100% { border-radius: 70% 30% 40% 60% / 35% 65% 35% 65%; }
-          33%       { border-radius: 40% 60% 70% 30% / 65% 35% 65% 35%; }
-          66%       { border-radius: 55% 45% 35% 65% / 45% 55% 45% 55%; }
-        }
-
-        /* ── MOBILE ── */
-        @media (max-width: 640px) {
-          /* Reset zoom/font-size for mobile */
-          html {
-            font-size: 100%;
-            zoom: 1;
-          }
-
-          /* Nav */
-          .nav-links { display: none !important; }
-          .hamburger { display: flex !important; }
-          .dark-toggle { right: 64px !important; }
-
-          /* Hero: empilha verticalmente, título menor no mobile */
-          section[data-id="hero"] {
-            flex-direction: column !important;
-            align-items: flex-start !important;
-            justify-content: flex-end !important;
-            padding: 0 20px 80px !important;
-            gap: 24px !important;
-          }
-          section[data-id="hero"] h1 {
-            font-size: clamp(36px, 14vw, 64px) !important;
-            letter-spacing: -1px !important;
-            line-height: 0.92 !important;
-          }
-          .hero-right {
-            max-width: 100% !important;
-            text-align: left !important;
-          }
-
-          /* Sobre: grid vira coluna */
-          .sobre-grid {
-            grid-template-columns: 1fr !important;
-            gap: 32px !important;
-          }
-
-          /* Projetos: timeline com menos padding */
-          #projetos {
-            padding: 60px 16px 80px !important;
-          }
-          #projetos > div:last-of-type {
-            padding-left: 28px !important;
-          }
-
-          /* Card expandido: grid vira coluna */
-          .card-expanded-grid {
-            grid-template-columns: 1fr !important;
-            gap: 20px !important;
-          }
-
-          /* Contato */
-          #contato {
-            padding: 60px 16px 60px !important;
-          }
-        }
-
-        @media (max-width: 400px) {
-          .dark-toggle { right: 56px !important; }
-          section[data-id="hero"] h1 {
-            font-size: clamp(32px, 13vw, 52px) !important;
-          }
-        }
-      `}</style>
     </div>
   );
 }
