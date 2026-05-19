@@ -408,7 +408,7 @@ export default function Portfolio() {
         id="sobre"
         data-id="sobre"
         style={{
-          minHeight: "auto", position: "relative", zIndex: 3,
+          minHeight: "100vh", position: "relative", zIndex: 3,
           display: "flex", alignItems: "center",
           padding: "100px 24px",
         }}
@@ -497,7 +497,7 @@ export default function Portfolio() {
         id="projetos"
         data-id="projetos"
         style={{
-          minHeight: "auto", position: "relative", zIndex: 3,
+          minHeight: "100vh", position: "relative", zIndex: 3,
           padding: "70px 24px 100px",
           display: "flex", flexDirection: "column", alignItems: "center",
         }}
@@ -710,7 +710,7 @@ export default function Portfolio() {
         id="contato"
         data-id="contato"
         style={{
-          minHeight: "auto", position: "relative", zIndex: 3,
+          minHeight: "100vh", position: "relative", zIndex: 3,
           display: "flex", alignItems: "center", justifyContent: "center",
           padding: "70px 24px 80px",
         }}
@@ -844,6 +844,10 @@ export default function Portfolio() {
             font-size: 80%;
             zoom: 0.8;
           }
+
+          section[data-id="hero"] {
+              min-height: 130vh !important;
+            }
         }
 
         /* Grain overlay */
