@@ -271,9 +271,24 @@ export default function Portfolio() {
                 transform: dark ? "translateX(16px)" : "translateX(0px)",
                 transition: "transform 0.3s, background 0.3s",
                 display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: 8,
               }}>
-                {dark ? "☽" : "☀"}
+                {dark ? (
+                  <svg width="9" height="9" viewBox="0 0 24 24" fill="none">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="#312E81"/>
+                  </svg>
+                ) : (
+                  <svg width="9" height="9" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="4.5" fill="#F0F9FF"/>
+                    <line x1="12" y1="2" x2="12" y2="5" stroke="#F0F9FF" strokeWidth="2.5" strokeLinecap="round"/>
+                    <line x1="12" y1="19" x2="12" y2="22" stroke="#F0F9FF" strokeWidth="2.5" strokeLinecap="round"/>
+                    <line x1="2" y1="12" x2="5" y2="12" stroke="#F0F9FF" strokeWidth="2.5" strokeLinecap="round"/>
+                    <line x1="19" y1="12" x2="22" y2="12" stroke="#F0F9FF" strokeWidth="2.5" strokeLinecap="round"/>
+                    <line x1="4.93" y1="4.93" x2="7.05" y2="7.05" stroke="#F0F9FF" strokeWidth="2.5" strokeLinecap="round"/>
+                    <line x1="16.95" y1="16.95" x2="19.07" y2="19.07" stroke="#F0F9FF" strokeWidth="2.5" strokeLinecap="round"/>
+                    <line x1="4.93" y1="19.07" x2="7.05" y2="16.95" stroke="#F0F9FF" strokeWidth="2.5" strokeLinecap="round"/>
+                    <line x1="16.95" y1="7.05" x2="19.07" y2="4.93" stroke="#F0F9FF" strokeWidth="2.5" strokeLinecap="round"/>
+                  </svg>
+                )}
               </div>
             </button>
         </div>
@@ -357,7 +372,12 @@ export default function Portfolio() {
               e.target.style.color = dark ? "#C7D2FE" : "#0EA5E9";
             }}
           >
-            DIFERENCIAIS ↗
+            <span style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
+              DIFERENCIAIS
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+                <path d="M7 17L17 7M17 7H7M17 7V17" stroke={dark ? "#C7D2FE" : "#0EA5E9"} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </span>
           </button>
         </div>
         </div>
@@ -534,21 +554,21 @@ export default function Portfolio() {
                       </span>
                       <h3 style={{
                         fontFamily: "'Nasalization','Century Gothic',sans-serif",
-                        fontSize: "clamp(12px, 2vw, 17px)",
+                        fontSize: "clamp(15px, 2vw, 17px)",
                         fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.5px",
-                        color: isOpen ? c.titleOpen : c.title,
+                        color: c.title,
                         margin: 0, flex: 1, transition: "color 0.25s",
                         minWidth: 0,
                       }}>
                         {p.title}
                       </h3>
                       <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
-                        <span style={{
-                          fontSize: 13, color: c.eyebrow,
-                          display: "inline-block",
-                          transition: "transform 0.35s ease",
-                          transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
-                        }}>▾</span>
+                        <svg
+                          width="16" height="16" viewBox="0 0 24 24" fill="none"
+                          style={{ transition: "transform 0.35s ease", transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}
+                        >
+                          <path d="M6 9L12 15L18 9" stroke={c.eyebrow} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
                       </div>
                     </div>
 
@@ -602,7 +622,10 @@ export default function Portfolio() {
                                 e.currentTarget.style.color = c.btnColor;
                               }}
                             >
-                              ACESSAR ↗
+                              ACESSAR
+                              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" style={{ marginLeft: 6 }}>
+                                <path d="M7 17L17 7M17 7H7M17 7V17" stroke={c.btnColor} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                              </svg>
                             </a>
                           ) : (
                             <span style={{
@@ -744,7 +767,9 @@ export default function Portfolio() {
                   <div style={{ fontSize: 10, color: dark ? "#4338CA" : "#0EA5E9", letterSpacing: "1.5px", textTransform: "uppercase", fontWeight: 700 }}>{item.label}</div>
                   <div style={{ fontSize: "clamp(12px,2vw,15px)", color: dark ? "#EEF2FF" : "#0369A1", fontWeight: 600, marginTop: 3, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{item.value}</div>
                 </div>
-                <span style={{ color: dark ? "#C7D2FE" : "#0EA5E9", fontSize: 18, flexShrink: 0 }}>↗</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0 }}>
+                  <path d="M7 17L17 7M17 7H7M17 7V17" stroke={dark ? "#C7D2FE" : "#ff73e8"} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
               </a>
             ))}
           </div>
