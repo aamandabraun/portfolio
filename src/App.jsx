@@ -3,58 +3,46 @@ import { useEffect, useState } from "react";
 
 const PROJECTS = [
   {
-    num: "01",
     title: "Caixa do Mundo",
-    short: "Clube de livros por assinatura com gestão de planos e pagamentos via Stripe.",
-    desc: "Plataforma completa de clube de livros por assinatura com curadoria mensal de títulos. O sistema conta com gestão de planos, integração de pagamentos recorrentes via Stripe, painel do assinante e área administrativa para gestão de pedidos e envios.",
-    tags: ["React", "Node.js", "Stripe"],
-    site: "https://caixadomundo.com.br",
+    short: "Uma viagem por mês sem sair do sofá. Carimbe seu passaporte!",
+    desc: "Plataforma fullstack de clube de livros por assinatura. Backend em Node.js com Prisma + PostgreSQL, pagamentos recorrentes via Stripe com webhooks, autenticação JWT e e-mails transacionais com Resend. Deploy automatizado no Render (Docker) e Vercel, com documentação via Swagger.",
+    tags: ["Fullstack", "Stripe", "API REST"],
+    site: "https://caixa-do-mundo.vercel.app/",
     gif: null,
-    gifMobile: null,
     wip: false,
   },
   {
-    num: "02",
     title: "Bicho Solto",
-    short: "Jogo da memória com cartas de animais silvestres brasileiros e sistema de pontuação.",
-    desc: "Jogo da memória desenvolvido com lógica de correspondência de pares, contagem de tentativas, timer e ranking de pontuação. Design responsivo com animações CSS para o virar das cartas e feedback visual a cada jogada.",
-    tags: ["JavaScript", "CSS", "HTML"],
-    site: "https://bichosolto.vercel.app",
+    short: "Animais que mentem, fogem e embaralham. Você consegue pegá-los?",
+    desc: "Jogo da memória com mecânicas de caos: cartas que se embaralham, clicks desviados e mesa que vira. Desenvolvido com TypeScript puro, sem frameworks, com animações CSS e lógica de estado customizada. Foco em manipulação do DOM, eventos e controle de tempo.",
+    tags: ["Jogo", "Responsivo", "Typescript"],
+    site: "https://bicho-solto.vercel.app/",
     gif: null,
-    gifMobile: null,
     wip: false,
   },
   {
-    num: "03",
-    title: "E-commerce",
-    short: "Loja virtual com carrinho, checkout completo e painel administrativo integrado.",
-    desc: "Loja virtual com catálogo de produtos, carrinho de compras, fluxo de checkout e painel administrativo para gestão de estoque, pedidos e clientes. Autenticação com JWT e integração com gateway de pagamento.",
-    tags: ["React", "TypeScript", "API REST"],
-    site: "https://ecommerce.vercel.app",
+    title: "Tintas Fischer",
+    short: "Loja virtual com catálogo completo, identidade visual e gestão de produtos",
+    desc: "Implementação completa de e-commerce para loja física de tintas em plataforma Moovin. Responsável por cadastro de toda a linha de produtos com descrições, pesos e variações, criação de artes institucionais e configuração de frete e pagamentos. Loja em produção com identidade visual consistente.",
+    tags: ["E-commerce", "Negócios", "Product Manager"],
+    site: "https://www.lojatintasfischer.com.br/",
     gif: null,
-    gifMobile: null,
     wip: false,
   },
   {
-    num: "04",
     title: "BarbiApp",
-    short: "Aplicativo mobile para gestão de academias — alunos, mensalidades e agenda.",
-    desc: "App para gestão completa de academias com cadastro de alunos, controle de mensalidades, agendamento de aulas e relatórios financeiros. Interface pensada para facilitar o dia a dia de gestores e instrutores.",
-    tags: ["React Native", "Node.js", "API REST"],
+    short: "Gestão completa de academia no bolso — do check-in ao treino.",
+    desc: "Plataforma multi-tenant para gestão de academias com app mobile em React Native + Expo e painel web em Next.js. API em NestJS com Prisma + PostgreSQL, autenticação JWT com refresh token e arquitetura em monorepo via Turborepo. Stack 100% TypeScript.",
+    tags: ["Aplicativo", "Negócios", "Multi-tenant"],
     site: null,
-    gif: null,
-    gifMobile: null,
     wip: true,
   },
   {
-    num: "05",
-    title: "IA para Políticos",
-    short: "Ferramenta com LLM para análise de discursos e geração de conteúdo político.",
-    desc: "Ferramenta com modelos de linguagem para análise de discursos políticos, identificação de padrões, geração de sumários e produção de conteúdo. Interface web para upload e consulta de documentos com integração via FastAPI.",
-    tags: ["Python", "LLM", "FastAPI"],
+    title: "É Vero?",
+    short: "O seu voto não precisa ser no escuro.",
+    desc: "Ferramenta de inteligência política com LLM para cruzar valores do eleitor com planos de governo. Interface web com ranking de aderência por candidato e painel de acompanhamento de mandato com PLs em tempo real. Validada no Techstars Startup Weekend com 10 vendas em 2 horas.",
+    tags: ["Inteligência Artificial", "Negócios", "FastAPI"],
     site: null,
-    gif: null,
-    gifMobile: null,
     wip: true,
   },
 ];
@@ -90,7 +78,7 @@ export default function Portfolio() {
             setActiveSection(e.target.dataset.id);
           }
         }),
-      { threshold: 0.1 }
+      { threshold: 0.3 }
     );
     const timer = setTimeout(() => {
       document.querySelectorAll("[data-id]").forEach((el) => obs.observe(el));
@@ -138,7 +126,7 @@ export default function Portfolio() {
     eyebrow:    dark ? "#4338CA"                  : "#0EA5E9",
     line:       dark ? "rgba(67,56,202,0.35)"      : "rgba(14,165,233,0.25)",
     dot:        "#4338CA",
-    dotWip:     "#EF9F27",
+    dotWip:     "#4338CA",
     cardBg:     dark ? "rgba(30,27,75,0.60)"       : "rgba(224,242,254,0.55)",
     cardBorder: dark ? "rgba(67,56,202,0.40)"      : "rgba(125,211,252,0.65)",
     cardOpen:   dark ? "#7DD3FC"                  : "#0EA5E9",
@@ -558,16 +546,6 @@ export default function Portfolio() {
                       </h3>
                       <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
                         <span style={{
-                          padding: "4px 10px", borderRadius: 20,
-                          fontSize: 9, fontWeight: 700, letterSpacing: "1.5px", textTransform: "uppercase",
-                          background: p.wip ? c.wipBg : c.liveBg,
-                          color: p.wip ? c.wipColor : c.liveColor,
-                          border: `1px solid ${p.wip ? c.wipBorder : c.liveBorder}`,
-                          whiteSpace: "nowrap",
-                        }}>
-                          {p.wip ? "Em dev" : "Live"}
-                        </span>
-                        <span style={{
                           fontSize: 13, color: c.eyebrow,
                           display: "inline-block",
                           transition: "transform 0.35s ease",
@@ -626,7 +604,7 @@ export default function Portfolio() {
                                 e.currentTarget.style.color = c.btnColor;
                               }}
                             >
-                              VER SITE ↗
+                              ACESSAR ↗
                             </a>
                           ) : (
                             <span style={{
@@ -644,36 +622,12 @@ export default function Portfolio() {
 
                         <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                           <div style={{
-                            borderRadius: 12, border: `1px solid ${c.gifBorder}`,
-                            background: c.gifBg, aspectRatio: "16/9",
-                            display: "flex", flexDirection: "column",
-                            alignItems: "center", justifyContent: "center", gap: 6,
-                            overflow: "hidden",
-                          }}>
-                            {p.gif ? (
-                              <img src={p.gif} alt={`${p.title} desktop`} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                            ) : (
-                              <>
-                                <span style={{ fontSize: 20, color: c.gifText, opacity: 0.4 }}>◈</span>
-                                <span style={{ fontSize: 9, color: c.gifText, opacity: 0.4, letterSpacing: "1.5px", textTransform: "uppercase", fontWeight: 700 }}>Desktop</span>
-                              </>
-                            )}
-                          </div>
-                          <div style={{
                             borderRadius: 10, border: `1px solid ${c.gifBorder}`,
                             background: c.gifBg, aspectRatio: "16/5",
                             display: "flex", flexDirection: "column",
                             alignItems: "center", justifyContent: "center", gap: 6,
                             overflow: "hidden",
                           }}>
-                            {p.gifMobile ? (
-                              <img src={p.gifMobile} alt={`${p.title} mobile`} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                            ) : (
-                              <>
-                                <span style={{ fontSize: 16, color: c.gifText, opacity: 0.4 }}>◎</span>
-                                <span style={{ fontSize: 9, color: c.gifText, opacity: 0.4, letterSpacing: "1.5px", textTransform: "uppercase", fontWeight: 700 }}>Mobile</span>
-                              </>
-                            )}
                           </div>
                         </div>
                       </div>
