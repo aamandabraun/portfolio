@@ -357,7 +357,7 @@ export default function Portfolio() {
               e.target.style.color = dark ? "#C7D2FE" : "#0EA5E9";
             }}
           >
-            PROJETOS ↗
+            DIFERENCIAIS ↗
           </button>
         </div>
         </div>
@@ -619,15 +619,16 @@ export default function Portfolio() {
                         </div>
 
                         {!p.wip && (
-                          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                            <div style={{
-                              borderRadius: 10, border: `1px solid ${c.gifBorder}`,
-                              background: c.gifBg, aspectRatio: "16/5",
-                              display: "flex", flexDirection: "column",
-                              alignItems: "center", justifyContent: "center", gap: 6,
-                              overflow: "hidden",
-                            }}>
-                            </div>
+                          <div style={{
+                            borderRadius: 10, border: `1px solid ${c.gifBorder}`,
+                            background: c.gifBg, aspectRatio: "16/9",
+                            display: "flex", flexDirection: "column",
+                            alignItems: "center", justifyContent: "center", gap: 6,
+                            overflow: "hidden",
+                          }}>
+                            {p.gif && (
+                              <img src={p.gif} alt={`${p.title} demo`} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                            )}
                           </div>
                         )}
                       </div>
