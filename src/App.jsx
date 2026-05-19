@@ -218,33 +218,6 @@ export default function Portfolio() {
         }} />
       </div>
 
-      {/* ── TOGGLE DARK MODE ── */}
-      <button
-        onClick={() => setDark((d) => !d)}
-        title={dark ? "Modo claro" : "Modo escuro"}
-        className="dark-toggle"
-        style={{
-          position: "fixed", top: 22, right: 20, zIndex: 300,
-          width: 38, height: 22, borderRadius: 11,
-          border: dark ? "1.5px solid #4338CA" : "1.5px solid #0EA5E9",
-          background: dark ? "#312E81" : "#F0F9FF",
-          cursor: "pointer", padding: 0,
-          transition: "background 0.3s, border 0.3s",
-          display: "flex", alignItems: "center", paddingInline: 3,
-        }}
-      >
-        <div style={{
-          width: 14, height: 14, borderRadius: "50%",
-          background: dark ? "#F0F9FF" : "#0EA5E9",
-          transform: dark ? "translateX(16px)" : "translateX(0px)",
-          transition: "transform 0.3s, background 0.3s",
-          display: "flex", alignItems: "center", justifyContent: "center",
-          fontSize: 8,
-        }}>
-          {dark ? "☽" : "☀"}
-        </div>
-      </button>
-
       {/* ── NAV ── */}
       <nav style={{
         position: "fixed", top: 0, left: 0, right: 0, zIndex: 200,
@@ -289,6 +262,32 @@ export default function Portfolio() {
               {s}
             </button>
           ))}
+
+            {/* TOGGLE DARK MODE */}
+            <button
+              onClick={() => setDark((d) => !d)}
+              title={dark ? "Modo claro" : "Modo escuro"}
+              className="dark-toggle"
+              style={{
+                width: 38, height: 22, borderRadius: 11,
+                border: dark ? "1.5px solid #4338CA" : "1.5px solid #0EA5E9",
+                background: dark ? "#312E81" : "#F0F9FF",
+                cursor: "pointer", padding: 0,
+                transition: "background 0.3s, border 0.3s",
+                display: "flex", alignItems: "center", paddingInline: 3,
+              }}
+            >
+              <div style={{
+                width: 14, height: 14, borderRadius: "50%",
+                background: dark ? "#F0F9FF" : "#0EA5E9",
+                transform: dark ? "translateX(16px)" : "translateX(0px)",
+                transition: "transform 0.3s, background 0.3s",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                fontSize: 8,
+              }}>
+                {dark ? "☽" : "☀"}
+              </div>
+            </button>
         </div>
       </nav>
 
@@ -318,6 +317,7 @@ export default function Portfolio() {
       {/* ── HERO ── */}
       <section
         data-id="hero"
+        className="hero-section-global"
         style={{
           minHeight: "100vh", position: "relative", zIndex: 2,
           display: "flex", alignItems: "flex-end",
@@ -347,6 +347,7 @@ export default function Portfolio() {
           }}>
             Desenvolvimento fullstack orientado a experiência — do fluxo ao detalhe que ninguém percebe, mas todo mundo sente.
           </p>
+          <div style={{ width: "100%" }}>
           <button
             onClick={() => scrollTo("projetos")}
             style={{
@@ -357,6 +358,7 @@ export default function Portfolio() {
               fontSize: 12, fontWeight: 700, cursor: "pointer",
               letterSpacing: "2px", textTransform: "uppercase",
               fontFamily: "'Unbounded', sans-serif", transition: "all 0.25s",
+              width: "100%",
             }}
             onMouseEnter={(e) => {
               e.target.style.background = dark ? "#C7D2FE" : "#0EA5E9";
@@ -369,6 +371,7 @@ export default function Portfolio() {
           >
             PROJETOS ↗
           </button>
+        </div>
         </div>
 
         <div style={{

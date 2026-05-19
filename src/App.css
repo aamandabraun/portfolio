@@ -164,43 +164,44 @@ body::after {
     display: flex !important;
     flex-direction: column !important;
     justify-content: flex-end !important;
-    align-items: stretch !important;
+    align-items: center !important;
     padding: 0 24px 75px !important;
     gap: 16px !important;
   }
 
-  .hero-content-wrapper {
+  .hero-section-global > div:first-child {
     flex: none !important;
-  }
-
-  .hero-title-block {
-    flex: none !important;
-    order: 1 !important;
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
   }
 
   .hero-section-global h1 {
-    font-size: clamp(38px, 12vw, 64px) !important;
+    font-size: clamp(60px, 18vw, 80px) !important;
     letter-spacing: -2px !important;
-    line-height: 0.9 !important;
+    line-height: 0.88 !important;
+    text-align: center !important;
     margin-bottom: 0 !important;
   }
 
   .hero-right {
     max-width: 100% !important;
-    text-align: left !important;
-    order: 2 !important;
+    width: 100% !important;
+    text-align: justify !important;
     display: flex !important;
     flex-direction: column !important;
+    align-items: stretch !important;
     gap: 16px !important;
   }
 
   .hero-right p {
     margin: 0 !important;
+    text-align: justify !important;
   }
 
   .hero-right button {
-    align-self: flex-start !important;
-    order: 3 !important;
+    align-self: stretch !important;
+    width: 100% !important;
   }
 
   .sobre-grid {
@@ -225,17 +226,14 @@ body::after {
   }
 
   #blob-main {
-    transform: translate(-50%, -50%) scale(0.9) !important;
+    transform: translate(-50%, -50%) scale(0.8) !important;
   }
   
   #blob-secondary {
-    transform: translate(-50%, -50%) scale(0.9) !important;
+    transform: translate(-50%, -50%) scale(0.8) !important;
   }
 }
 
 @media (max-width: 400px) {
   .nav-links { gap: 14px !important; }
-  .hero-section-global h1 {
-    font-size: clamp(34px, 11vw, 46px) !important;
-  }
 }
