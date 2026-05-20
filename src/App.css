@@ -209,6 +209,16 @@ body::after {
     gap: 32px !important;
   }
 
+  .sobre-grid > div:first-child h2 {
+  text-align: center !important;
+  font-size: clamp(36px, 6vw, 35px) !important;
+  letter-spacing: -1px !important;
+  }
+
+  .sobre-grid > div:first-child > p:first-child {
+  text-align: center !important;
+  }
+
   #projetos {
     padding: 60px 16px 80px !important;
   }
