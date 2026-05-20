@@ -384,7 +384,7 @@ export default function Portfolio() {
         </div>
         </div>
 
-        <div style={{
+        <div className="scroll-indicator" style={{
           position: "absolute", bottom: 28, left: "50%", transform: "translateX(-50%)",
           display: "flex", flexDirection: "column", alignItems: "center", gap: 6,
           opacity: 0.45, animation: "bounce 2s ease-in-out infinite",
@@ -420,16 +420,18 @@ export default function Portfolio() {
                 fontFamily: "'Nasalization', 'Century Gothic', sans-serif",
                 fontSize: "clamp(28px, 4.5vw, 60px)",
                 fontWeight: 900, letterSpacing: "-2px", lineHeight: 0.95,
-                textTransform: "uppercase", marginBottom: 32, ...titleGradient,
+                textTransform: "uppercase", marginBottom: 32,
               }}>
-                DESIGNER<br />
-                <span style={{
-                  WebkitTextStroke: dark ? "2px #4338CA" : "2px #0EA5E9",
-                  WebkitTextFillColor: "transparent", color: "transparent",
-                  backgroundImage: "none", WebkitBackgroundClip: "initial",
-                  display: "inline-block",
-                }}>&</span>
-                {" "}DEV
+                <span style={{ ...titleGradient, display: "block" }}>DESIGNER</span>
+                <span style={{ display: "block" }}>
+                  <span style={{
+                    WebkitTextStroke: dark ? "2px #4338CA" : "2px #0EA5E9",
+                    WebkitTextFillColor: "transparent",
+                    color: "transparent",
+                  }}>&</span>
+                  {" "}
+                  <span style={{ ...titleGradient }}>DEV</span>
+                </span>
               </h2>
               <p style={{ fontSize: "clamp(14px,1.5vw,16px)", color: dark ? "#C7D2FE" : "#0369A1", lineHeight: 1.9, marginBottom: 18 }}>
                 Formada em Comércio Exterior, formanda em Análise e Desenvolvimento de Sistemas e acrobata nas horas vagas.

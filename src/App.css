@@ -158,6 +158,10 @@ body::after {
     background-color: transparent !important;
   }
 
+  .scroll-indicator {
+  display: none !important;
+  }
+
   .hero-section-global {
     min-height: 100vh !important;
     height: 100vh !important;
