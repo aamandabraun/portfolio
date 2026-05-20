@@ -55,7 +55,6 @@ export default function Portfolio() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [dark, setDark] = useState(false);
   const [openIndex, setOpenIndex] = useState(null);
-  const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleProject = (i) => setOpenIndex(openIndex === i ? null : i);
 
@@ -162,14 +161,12 @@ useEffect(() => {
 
   const scrollTo = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-    setMenuOpen(false);
   };
 
   const c = {
     eyebrow:    dark ? "#4338CA"                  : "#0EA5E9",
     line:       dark ? "rgba(67,56,202,0.35)"      : "rgba(14,165,233,0.25)",
     dot:        "#4338CA",
-    dotWip:     "#4338CA",
     cardBg:     dark ? "rgba(30,27,75,0.60)"       : "rgba(224,242,254,0.55)",
     cardBorder: dark ? "rgba(67,56,202,0.40)"      : "rgba(125,211,252,0.65)",
     cardOpen:   dark ? "#7DD3FC"                  : "#0EA5E9",
@@ -183,13 +180,9 @@ useEffect(() => {
     wipBg:      "rgba(186,117,23,0.20)",
     wipColor:   "#FAC775",
     wipBorder:  "rgba(186,117,23,0.45)",
-    liveBg:     dark ? "rgba(15,110,86,0.25)"      : "rgba(15,110,86,0.12)",
-    liveColor:  "#5DCAA5",
-    liveBorder: "rgba(29,158,117,0.40)",
     divider:    dark ? "rgba(67,56,202,0.25)"      : "rgba(14,165,233,0.20)",
     gifBg:      dark ? "rgba(30,27,75,0.80)"       : "rgba(186,230,253,0.35)",
     gifBorder:  dark ? "rgba(67,56,202,0.30)"      : "rgba(14,165,233,0.20)",
-    gifText:    dark ? "#4338CA"                  : "#7DD3FC",
     btnColor:   dark ? "#C7D2FE"                  : "#0EA5E9",
     btnBorder:  dark ? "rgba(199,210,254,0.40)"    : "rgba(14,165,233,0.40)",
   };
@@ -336,29 +329,6 @@ useEffect(() => {
             </button>
         </div>
       </nav>
-
-      {menuOpen && (
-        <div style={{
-          position: "fixed", top: 60, left: 0, right: 0, zIndex: 199,
-          background: dark ? "rgba(30,27,75,0.97)" : "rgba(240,249,255,0.97)",
-          backdropFilter: "blur(20px)",
-          borderBottom: dark ? "1px solid rgba(67,56,202,0.3)" : "1px solid rgba(14,165,233,0.3)",
-          display: "flex", flexDirection: "column", alignItems: "center", gap: 0,
-          padding: "16px 0",
-        }}>
-          {["sobre", "projetos", "contato"].map((s) => (
-            <button key={s} onClick={() => scrollTo(s)} style={{
-              background: "none", border: "none", cursor: "pointer",
-              fontSize: 14, letterSpacing: "2px", textTransform: "lowercase",
-              color: dark ? "#C7D2FE" : "#0EA5E9",
-              fontFamily: "'Unbounded', sans-serif", padding: "14px 0", width: "100%",
-              textAlign: "center",
-            }}>
-              {s}
-            </button>
-          ))}
-        </div>
-      )}
 
       {/* ── HERO ── */}
       <section
@@ -537,7 +507,7 @@ useEffect(() => {
         }}
       >
         <div style={{ textAlign: "center", marginBottom: 56, ...cardFadeIn(0) }}>
-          <p style={{ fontSize: 11, color: c.eyebrow, letterSpacing: "3px", textTransform: "uppercase", marginBottom: 16, fontWeight: 600 }}>
+          <p style={{ fontSize: 11, color: c.eyebrow, letterSpacing: "3px", textTransform: "uppercase", marginBottom: 16, fontWeight: 600, textAlign: "center" }}>
             portfólio
           </p>
           <h2 style={{
