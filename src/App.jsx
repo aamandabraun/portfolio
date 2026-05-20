@@ -455,7 +455,7 @@ useEffect(() => {
             <div style={{ paddingTop: 8, display: "flex", flexDirection: "column", height: "100%" }}>
               <div style={{ flex: 1 }}>
                 {[
-                  { label: "Projetista e vendedora", years: "Tintas Fischer, 2019 — 2025" },
+                  { label: "Designer e vendedora", years: "Tintas Fischer, 2019 — 2025" },
                   { label: "Desenvolvedora", years: "Clinicorp Solutions, 2025 — hoje" },
                 ].map((sk, i) => (
                   <div key={i} style={{ marginBottom: 36 }}>
