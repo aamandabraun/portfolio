@@ -93,6 +93,14 @@ body::after {
   66%       { border-radius: 55% 45% 35% 65% / 45% 55% 45% 55%; }
 }
 
+#sobre p,
+#projetos p {
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  word-break: break-word;
+}
+
 /* ── DESKTOP: escala 80% ── */
 @media (min-width: 641px) {
   html {
@@ -131,7 +139,7 @@ body::after {
     zoom: 1 !important;
   }
 
-  nav > span, .hamburger {
+  nav > span {
     display: none !important;
   }
 

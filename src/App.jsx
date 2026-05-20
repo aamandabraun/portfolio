@@ -119,6 +119,15 @@ export default function Portfolio() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    const onScroll = () => {
+      const total = document.body.scrollHeight - window.innerHeight;
+      setScrollProgress((window.scrollY / total) * 100);
+    };
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   const scrollTo = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
     setMenuOpen(false);
@@ -433,10 +442,10 @@ export default function Portfolio() {
                   <span style={{ ...titleGradient }}>DEV</span>
                 </span>
               </h2>
-              <p style={{ fontSize: "clamp(14px,1.5vw,16px)", color: dark ? "#C7D2FE" : "#0369A1", lineHeight: 1.9, marginBottom: 18 }}>
+              <p style={{ fontSize: "clamp(14px,1.5vw,16px)", color: dark ? "#C7D2FE" : "#0369A1", lineHeight: 1.9, marginBottom: 18, textAlign: "justify" }}>
                 Formada em Comércio Exterior, formanda em Análise e Desenvolvimento de Sistemas e acrobata nas horas vagas.
               </p>
-              <p style={{ fontSize: "clamp(14px,1.5vw,16px)", color: dark ? "#C7D2FE" : "#0369A1", lineHeight: 1.9 }}>
+              <p style={{ fontSize: "clamp(14px,1.5vw,16px)", color: dark ? "#C7D2FE" : "#0369A1", lineHeight: 1.9, textAlign: "justify" }}>
                 Desenvolvo projetos que cobrem desde lógica de programação, estrutura de dados em C e POO em Java, até interfaces em React + TypeScript e APIs Node.js em produção.
               </p>
             </div>
@@ -601,7 +610,7 @@ export default function Portfolio() {
                     <div style={{ padding: "0 20px 24px", borderTop: `1px solid ${c.divider}` }}>
                       <div className="card-expanded-grid" style={{ display: "grid", gridTemplateColumns: p.wip ? "1fr" : "1fr 1fr", gap: 24, paddingTop: 22, alignItems: "start" }}>
                         <div>
-                          <p style={{ fontSize: 13, color: c.desc, lineHeight: 1.85, marginBottom: 22 }}>
+                          <p style={{ fontSize: 13, color: c.desc, lineHeight: 1.85, marginBottom: 22, textAlign: "justify" }}>
                             {p.desc}
                           </p>
                           <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 22 }}>
@@ -796,7 +805,7 @@ export default function Portfolio() {
                   <div style={{ fontSize: "clamp(12px,2vw,15px)", color: dark ? "#EEF2FF" : "#0369A1", fontWeight: 600, marginTop: 3, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{item.value}</div>
                 </div>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0 }}>
-                  <path d="M7 17L17 7M17 7H7M17 7V17" stroke={dark ? "#C7D2FE" : "#ff73e8"} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M7 17L17 7M17 7H7M17 7V17" stroke={dark ? "#C7D2FE" : "#0EA5E9"} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </a>
             ))}
