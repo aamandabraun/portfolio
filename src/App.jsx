@@ -361,7 +361,7 @@ useEffect(() => {
             color: dark ? "#C7D2FE" : "#0369A1",
             fontWeight: 500, lineHeight: 1.6, margin: "0 0 24px",
           }}>
-            Desenvolvimento fullstack orientado a experiência — do fluxo ao detalhe que ninguém percebe, mas todo mundo sente.
+            Desenvolvimento fullstack orientado a experiência: do fluxo ao detalhe que ninguém percebe, mas todo mundo sente.
           </p>
           <div style={{ width: "100%" }}>
           <button
