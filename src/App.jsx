@@ -92,23 +92,55 @@ export default function Portfolio() {
   }, []);
 
   useEffect(() => {
-    const onMove = (e) => {
-      const x = (e.clientX / window.innerWidth) * 100;
-      const y = (e.clientY / window.innerHeight) * 100;
-      const main = document.getElementById("blob-main");
-      const sec = document.getElementById("blob-secondary");
-      if (main) {
-        main.style.left = `${50 + (x - 50) * 0.6}%`;
-        main.style.top = `${50 + (y - 50) * 0.4}%`;
-      }
-      if (sec) {
-        sec.style.left = `${50 + (x - 50) * -0.4}%`;
-        sec.style.top = `${50 + (y - 50) * -0.4}%`;
-      }
+  const moveBlobs = (x, y) => {
+    const main = document.getElementById("blob-main");
+    const sec  = document.getElementById("blob-secondary");
+    const isMobile = window.innerWidth <= 640;
+    const f = isMobile ? 1.2 : 0.6;
+    const fs = isMobile ? -0.9 : -0.4;
+    if (main) {
+      main.style.left = `${50 + (x - 50) * f}%`;
+      main.style.top  = `${50 + (y - 50) * f}%`;
+    }
+    if (sec) {
+      sec.style.left = `${50 + (x - 50) * fs}%`;
+      sec.style.top  = `${50 + (y - 50) * fs}%`;
+    }
+  };
+
+  const onMove  = (e) => moveBlobs(
+    (e.clientX / window.innerWidth)  * 100,
+    (e.clientY / window.innerHeight) * 100
+  );
+  const onTouch = (e) => {
+    const t = e.touches[0];
+    moveBlobs(
+      (t.clientX / window.innerWidth)  * 100,
+      (t.clientY / window.innerHeight) * 100
+    );
+  };
+
+  if (window.innerWidth <= 640) {
+    window.addEventListener("touchstart", onTouch, { passive: true });
+    window.addEventListener("touchmove",  onTouch, { passive: true });
+    return () => {
+      window.removeEventListener("touchstart", onTouch);
+      window.removeEventListener("touchmove",  onTouch);
     };
+  } else {
     window.addEventListener("mousemove", onMove);
     return () => window.removeEventListener("mousemove", onMove);
-  }, []);
+  }
+}, []);
+
+useEffect(() => {
+  const onScroll = () => {
+    const total = document.body.scrollHeight - window.innerHeight;
+    setScrollProgress((window.scrollY / total) * 100);
+  };
+  window.addEventListener("scroll", onScroll);
+  return () => window.removeEventListener("scroll", onScroll);
+}, []);
 
   useEffect(() => {
     const onScroll = () => {

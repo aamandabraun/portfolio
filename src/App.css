@@ -248,11 +248,21 @@ body::after {
   }
 
   #blob-main {
-    transform: translate(-50%, -50%) scale(0.8) !important;
+    width: 400px !important;
+    height: 500px !important;
+    filter: blur(35px) !important;
+    top: 35%;
+    left: 50%;
+    animation: blobMorph 5s ease-in-out infinite !important;
   }
-  
+
   #blob-secondary {
-    transform: translate(-50%, -50%) scale(0.8) !important;
+    width: 700px !important;
+    height: 600px !important;
+    filter: blur(45px) !important;
+    top: 50%;
+    left: 50%;
+    animation: blobMorph2 7s ease-in-out infinite !important;
   }
 }
 
