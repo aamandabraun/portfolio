@@ -5,7 +5,7 @@ const PROJECTS = [
   {
     title: "Caixa do Mundo",
     short: "Uma viagem por mês sem sair do sofá. Carimbe seu passaporte!",
-    desc: "Plataforma fullstack de clube de livros por assinatura. Backend em Node.js com Prisma + PostgreSQL, pagamentos recorrentes via Stripe com webhooks, autenticação JWT e e-mails transacionais com Resend. Deploy automatizado no Render (Docker) e Vercel, com documentação via Swagger.",
+    desc: "Plataforma fullstack de clube de livros por assinatura. Backend em Node.js com Prisma + PostgreSQL, frontend com React Router + Tailwind, pagamentos recorrentes via Stripe com webhooks, autenticação JWT e e-mails transacionais com Resend. Deploy automatizado no Render (Docker) e Vercel, com documentação via Swagger.",
     tags: ["Fullstack", "Stripe", "API REST"],
     site: "https://caixa-do-mundo.vercel.app/",
     github: "https://github.com/aamandabraun/book-club-api",
@@ -15,7 +15,7 @@ const PROJECTS = [
   {
     title: "Bicho Solto",
     short: "Animais que mentem, fogem e embaralham. Você consegue pegá-los?",
-    desc: "Jogo da memória com mecânicas de caos: cartas que se embaralham, clicks desviados e mesa que vira. Desenvolvido com TypeScript puro, sem frameworks, com animações CSS e lógica de estado customizada. Foco em manipulação do DOM, eventos e controle de tempo.",
+    desc: "Jogo da memória onde os bichos fogem, cartas se embaralham, clicks desviados e mesa que vira. Desenvolvido com TypeScript puro, sem frameworks, com animações CSS e lógica de estado customizada. Foco em manipulação do DOM, eventos e controle de tempo.",
     tags: ["Jogo", "Responsivo", "Typescript"],
     site: "https://bicho-solto.vercel.app/",
     github: "https://github.com/aamandabraun/bicho-solto",
@@ -25,7 +25,7 @@ const PROJECTS = [
   {
     title: "Tintas Fischer",
     short: "Loja virtual com catálogo completo, identidade visual e gestão de produtos",
-    desc: "Implementação completa de e-commerce para loja física de tintas em plataforma Moovin. Responsável por cadastro de toda a linha de produtos com descrições, pesos e variações, criação de artes institucionais e configuração de frete e pagamentos. Loja em produção com identidade visual consistente.",
+    desc: "Implementação completa de e-commerce para loja física de tintas na plataforma Moovin. Responsável por cadastro de toda a linha de produtos com descrições, pesos e variações, criação de artes institucionais e configuração de frete e pagamentos. Loja em produção com identidade visual consistente.",
     tags: ["E-commerce", "Negócios", "Product Manager"],
     site: "https://www.lojatintasfischer.com.br/",
     gif: "/demo-tintas.gif",
@@ -509,7 +509,7 @@ export default function Portfolio() {
           </h2>
         </div>
 
-        <div style={{ maxWidth: 800, width: "100%", position: "relative", paddingLeft: 40 }}>
+        <div style={{ maxWidth: 1100, width: "100%", position: "relative", paddingLeft: 40 }}>
           <div style={{ position: "absolute", left: 10, top: 8, bottom: 8, width: 1, background: c.line }} />
 
           {PROJECTS.map((p, i) => {
@@ -604,9 +604,9 @@ export default function Portfolio() {
                           <p style={{ fontSize: 13, color: c.desc, lineHeight: 1.85, marginBottom: 22 }}>
                             {p.desc}
                           </p>
-                          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                          <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 22 }}>
                             {p.site ? (
-                                <a href={p.site} target="_blank" rel="noopener noreferrer"
+                              <a href={p.site} target="_blank" rel="noopener noreferrer"
                                 onClick={(e) => e.stopPropagation()}
                                 style={{
                                   display: "inline-flex", alignItems: "center", gap: 8,
@@ -644,7 +644,7 @@ export default function Portfolio() {
                               </span>
                             )}
                             {p.github && (
-                                <a href={p.github} target="_blank" rel="noopener noreferrer"
+                              <a href={p.github} target="_blank" rel="noopener noreferrer"
                                 onClick={(e) => e.stopPropagation()}
                                 style={{
                                   display: "inline-flex", alignItems: "center", gap: 8,
@@ -671,13 +671,12 @@ export default function Portfolio() {
                               </a>
                             )}
                           </div>
+                        </div>
 
                         {!p.wip && (
                           <div style={{
                             borderRadius: 10, border: `1px solid ${c.gifBorder}`,
                             background: c.gifBg, aspectRatio: "16/9",
-                            display: "flex", flexDirection: "column",
-                            alignItems: "center", justifyContent: "center", gap: 6,
                             overflow: "hidden",
                           }}>
                             {p.gif && (
@@ -689,7 +688,6 @@ export default function Portfolio() {
                     </div>
                   </div>
                 </div>
-              </div>
           </div>)})}
         </div>
       </section>
