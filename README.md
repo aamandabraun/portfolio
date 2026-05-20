@@ -1,28 +1,50 @@
-# Portfolio
+# 🫧 Portfólio
 
-> 🚧 **Em desenvolvimento** — [Acesse](https://portfolio-mwar6tlul-aamandabrauns-projects.vercel.app/)
+> *Desenvolvimento fullstack orientado a experiência — do fluxo ao detalhe que ninguém percebe, mas todo mundo sente.*
 
-Repositório dedicado ao desenvolvimento do meu portfólio, uma experiência visual marcante com animações, mesh gradients e scroll fluido para apresentar meus projetos e habilidades.
-
-<br>
-
-## 🛠️ Tecnologias & Ferramentas
-
-- **Core:** React 18+
-- **Build Tool:** Vite
-- **Runtime:** Node.js (v24+)
-- **Animações:** CSS Blobs, Three.js
-- **Estilização:** CSS-in-JS (inline styles)
+🌐 **[ACESSE](https://portfolio-virid-psi-67.vercel.app/)**
 
 <br>
 
-## 📌 Status das Seções
+## 🚀 Funcionalidades
 
-- [x] Hero com nome e blobs animados
-- [x] Barra de progresso com scroll
-- [ ] Seção About com skills
-- [ ] Seção Projetos
-- [ ] Seção Contato
-- [ ] Responsividade mobile
-- [ ] Deploy final no Vercel
+- ✅ Blobs animados e interativos que seguem o cursor (mouse no desktop, touch no mobile)
+- ✅ Modo claro / escuro com detecção automática da preferência do sistema
+- ✅ Barra de progresso de scroll animada na navegação
+- ✅ Seções com fade-in por IntersectionObserver
+- ✅ Lista de projetos expansível com animação suave
+- ✅ Layout totalmente responsivo (desktop e mobile)
+- ✅ Textura de grain sutil via SVG
+
+<br>
+
+## 🛠️ Tecnologias
+
+- **React** — componentização e gerenciamento de estado
+- **Vite** — bundler e ambiente de desenvolvimento
+- **CSS puro** — animações, responsividade e variáveis de tema
+- **Vercel** — deploy em produção
+
+<br>
+
+## 📁 Estrutura do Projeto
+
 ```
+portfolio/
+├── public/
+│   ├── AMANDA.png
+│   ├── demo-caixa.gif
+│   ├── demo-bicho.gif
+│   └── demo-tintas.gif
+├── src/
+│   ├── App.jsx       # Componente principal
+│   └── App.css       # Estilos globais e responsividade
+├── index.html
+└── vite.config.js
+```
+
+<br>
+
+## 🎬 Demonstração
+
+![Demo](public/demo.gif)
