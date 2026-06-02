@@ -218,8 +218,8 @@ useEffect(() => {
           width: 450, height: 600,
           borderRadius: "30% 70% 55% 45% / 60% 35% 65% 40%",
           background: dark
-            ? "conic-gradient(from 0deg, #1E1B4B, #363084, #282083)"
-            : "conic-gradient(from 0deg, #7DD3FC, #f874fd, #e8fb3cc6)",
+            ? "conic-gradient(from 0deg, #312d5e, #372eb2, #7c31a2)"
+            : "conic-gradient(from 0deg, #7DD3FC, #f874fd, #e8fb3ce4)",
           filter: "blur(30px)",
           top: "50%", left: "50%",
           transform: "translate(-50%, -50%)",
@@ -231,8 +231,8 @@ useEffect(() => {
           width: 950, height: 800,
           borderRadius: "70% 30% 40% 60% / 35% 65% 35% 65%",
           background: dark
-            ? "conic-gradient(from 180deg, #312E81, #352ba0, #17116f, #37336b, #312E81)"
-            : "conic-gradient(from 180deg, #FAE8FF, #7DD3FC, #A855F7, #FDBA74, #fbe83c)",
+            ? "conic-gradient(from 180deg, #312E81, #2c2393, #047e99, #7e12b4, #312d5e)"
+            : "conic-gradient(from 180deg, #9ab0ed, #7DD3FC, #A855F7, #f874fd, #e8fb3c)",
           filter: "blur(40px)",
           opacity: dark ? 0.9 : 0.8,
           top: "50%", left: "50%",
@@ -366,6 +366,7 @@ useEffect(() => {
           <div style={{ width: "100%" }}>
           <button
             onClick={() => scrollTo("projetos")}
+            className="btn-diferenciais"
             style={{
               padding: "13px 30px", borderRadius: 50,
               border: dark ? "2px solid #C7D2FE" : "2px solid #0EA5E9",
@@ -375,22 +376,21 @@ useEffect(() => {
               letterSpacing: "2px", textTransform: "uppercase",
               fontFamily: "'Unbounded', sans-serif", transition: "all 0.25s",
               width: "100%",
+              display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
             }}
             onMouseEnter={(e) => {
-              e.target.style.background = dark ? "#C7D2FE" : "#0EA5E9";
-              e.target.style.color = dark ? "#1E1B4B" : "#F0F9FF";
+              e.currentTarget.style.background = dark ? "#C7D2FE" : "#0EA5E9";
+              e.currentTarget.style.color = dark ? "#1E1B4B" : "#F0F9FF";
             }}
             onMouseLeave={(e) => {
-              e.target.style.background = "transparent";
-              e.target.style.color = dark ? "#C7D2FE" : "#0EA5E9";
+              e.currentTarget.style.background = "transparent";
+              e.currentTarget.style.color = dark ? "#C7D2FE" : "#0EA5E9";
             }}
           >
-            <span style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
-              DIFERENCIAIS
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
-                <path d="M7 17L17 7M17 7H7M17 7V17" stroke={dark ? "#C7D2FE" : "#0EA5E9"} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </span>
+            DIFERENCIAIS
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+              <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
           </button>
         </div>
         </div>
@@ -448,7 +448,7 @@ useEffect(() => {
                 Formada em Comércio Exterior, formanda em Análise e Desenvolvimento de Sistemas e acrobata nas horas vagas.
               </p>
               <p style={{ fontSize: "clamp(14px,1.5vw,16px)", color: dark ? "#C7D2FE" : "#0369A1", lineHeight: 1.9, textAlign: "justify" }}>
-                Desenvolvo projetos que cobrem desde lógica de programação, estrutura de dados em C e POO em Java, até interfaces em React + TypeScript e APIs Node.js em produção.
+                Desenvolvo projetos que cobrem desde lógica de programação a estrutura de dados em C, POO em Java, APIs Node.js em produção e até interfaces em React + TypeScript.
               </p>
             </div>
 
