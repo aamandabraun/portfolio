@@ -2,7 +2,7 @@
 
 > *Desenvolvimento fullstack orientado a experiência — do fluxo ao detalhe que ninguém percebe, mas todo mundo sente.*
 
-🌐 **[ACESSE](https://portfolio-virid-psi-67.vercel.app/)**
+🌐 **[ACESSE](https://aamandabraun.dev/)**
 
 <br>
 
