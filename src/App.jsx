@@ -134,30 +134,15 @@ export default function Portfolio() {
 
 useEffect(() => {
   const onScroll = () => {
-    const total = document.body.scrollHeight - window.innerHeight;
-    setScrollProgress((window.scrollY / total) * 100);
+  const isMobile = window.innerWidth <= 640;
+  const factor = isMobile ? 1 : 1.35;
+  const total = document.body.scrollHeight - window.innerHeight;
+  const progress = Math.min((window.scrollY / total) * 100 * factor, 100);
+  setScrollProgress(progress);
   };
   window.addEventListener("scroll", onScroll);
   return () => window.removeEventListener("scroll", onScroll);
 }, []);
-
-  useEffect(() => {
-    const onScroll = () => {
-      const total = document.body.scrollHeight - window.innerHeight;
-      setScrollProgress((window.scrollY / total) * 100);
-    };
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  useEffect(() => {
-    const onScroll = () => {
-      const total = document.body.scrollHeight - window.innerHeight;
-      setScrollProgress((window.scrollY / total) * 100);
-    };
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   const scrollTo = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
